@@ -27,6 +27,13 @@
 
 <button onclick="startQuest()">Start Quest</button>
 
+<div id="questPopup" style="display:none; background:#111; color:#00ff99; border:2px solid #00aaff; padding:20px; border-radius:10px; width:300px; margin:20px auto;">
+  <h2>⚔️ QUEST ACCEPTED ⚔️</h2>
+  <p>Welcome Player!</p>
+  <p>Let's begin your training.</p>
+  <button onclick="closeQuest()">Continue</button>
+</div>
+
     <h1>👋 Hi, I'm Emmanuel</h1>
 
     <p>Aspiring Web Developer from Nigeria.</p>
@@ -52,11 +59,12 @@
 <div id="message" style="margin-top:20px; font-size:22px; color:#00ff99; font-weight:bold;"></div>
 
 <script>
-function startQuest() { 
-    
-    document.getElementById("message").innerHTML =
-       
-       "⚔️ Welcome Player! Let's begin your training.";
+function startQuest() {
+  document.getElementById("questPopup").style.display = "block";
+}
+
+function closeQuest() {
+  document.getElementById("questPopup").style.display = "none";
 }
 </script>
 </body>
