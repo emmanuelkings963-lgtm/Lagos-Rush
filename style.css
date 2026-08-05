@@ -25,4 +25,29 @@ ul {
 
 li {
     margin: 10px 0;
+}body {
+  background: #0b0b0b;
+  color: #00aaff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+h1 {
+  font-size: 40px;
+  text-shadow: 0 0 10px #00aaff;
+}
+
+button {
+  background: transparent;
+  color: #00aaff;
+  border: 2px solid #00aaff;
+  padding: 12px 25px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #00aaff;
+  color: black;
 }
