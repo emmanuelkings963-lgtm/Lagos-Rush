@@ -35,7 +35,19 @@
 <p>Reward: ⭐ +50 XP</p>
   <button onclick="closeQuest()">Continue</button>
 </div>
+<div id="systemPanel" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#111; color:#00ff99; border:2px solid #00aaff; padding:20px; border-radius:10px; width:300px; text-align:center;">
+  <h2>⚔️ SILENT SYSTEM ⚔️</h2>
+  <p>Player: Emmanuel</p>
+  <p>Rank: E-Rank</p>
+  <p>Level: 1</p>
+  <p>XP: 0 / 100</p>
 
+  <p>Active Quest:</p>
+  <p>🏃 Daily Training</p>
+
+  <p>Reward:</p>
+  <p>⭐ +50 XP</p>
+</div>
     <h1>👋 Hi, I'm Emmanuel</h1>
 
     <p>Aspiring Web Developer from Nigeria.</p>
@@ -67,6 +79,7 @@ function startQuest() {
 
 function closeQuest() {
   document.getElementById("questPopup").style.display = "none";
+  document.getElementById("systemPanel").style.display = "block";
 }
 </script>
 </body>
