@@ -10,8 +10,7 @@
 
 <p>Rank: E-Rank</p>
 <p>Level: 1</p>
-
-<p>XP: 0 / 100</p>
+    <p>XP: <span id="xpText">0</span> / 100</p>
     
 <div class="xp-bar">
   <div class="xp-fill"></div>
@@ -92,7 +91,7 @@ function completeQuest() {
   }
 
   document.querySelector(".xp-fill").style.width = xp + "%";
-
+document.getElementById("xpText").innerHTML = xp;
   alert("🎉 Quest Completed!\n+50 XP");
 }
 </script>
