@@ -73,6 +73,8 @@
 <div id="message" style="margin-top:20px; font-size:22px; color:#00ff99; font-weight:bold;"></div>
 
 <script>
+let xp = 0;
+
 function startQuest() {
   document.getElementById("questPopup").style.display = "block";
 }
@@ -80,6 +82,18 @@ function startQuest() {
 function closeQuest() {
   document.getElementById("questPopup").style.display = "none";
   document.getElementById("systemPanel").style.display = "block";
+}
+
+function completeQuest() {
+  xp = xp + 50;
+
+  if (xp > 100) {
+    xp = 100;
+  }
+
+  document.querySelector(".xp-fill").style.width = xp + "%";
+
+  alert("🎉 Quest Completed!\n+50 XP");
 }
 </script>
 </body>
