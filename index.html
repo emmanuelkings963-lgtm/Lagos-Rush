@@ -127,10 +127,19 @@ document.getElementById("strengthText").innerHTML = strength;
 document.getElementById("agilityText").innerHTML = agility;
 document.getElementById("intelligenceText").innerHTML = intelligence;
     xp = xp + questReward;
-  if (xp > 100) {
-    xp = 100;
-  }
+  if (xp >= 100) {
+  xp = xp - 100;
 
+  let currentLevel = parseInt(
+    document.getElementById("levelText").innerHTML
+  );
+
+  currentLevel = currentLevel + 1;
+
+  document.getElementById("levelText").innerHTML = currentLevel;
+
+  alert("🎉 LEVEL UP!\nYou are now Level " + currentLevel + "!");
+}
   document.querySelector(".xp-fill").style.width = xp + "%";
 document.getElementById("xpText").innerHTML = xp;
     if (xp >= 100 && document.getElementById("levelText").innerHTML == "1") {
