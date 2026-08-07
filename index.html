@@ -92,7 +92,7 @@ function completeQuest() {
 
   document.querySelector(".xp-fill").style.width = xp + "%";
 document.getElementById("xpText").innerHTML = xp;
-    if (xp >= 100) {
+    if (xp >= 100 && document.getElementById("levelText").innerHTML == "1") {
   document.getElementById("levelText").innerHTML = 2;
   alert("🎉 LEVEL UP!\nYou are now Level 2!");
     }
