@@ -111,6 +111,21 @@ function closeQuest() {
 }
 
 function completeQuest() {
+    if (selectedQuest === "training") {
+  strength += 2;
+}
+
+if (selectedQuest === "study") {
+  intelligence += 2;
+}
+
+if (selectedQuest === "challenge") {
+  agility += 2;
+}
+
+document.getElementById("strengthText").innerHTML = strength;
+document.getElementById("agilityText").innerHTML = agility;
+document.getElementById("intelligenceText").innerHTML = intelligence;
     xp = xp + questReward;
   if (xp > 100) {
     xp = 100;
