@@ -79,7 +79,22 @@
 
 <script>
 let xp = 0;
+let selectedQuest = "";
+let questReward = 0;
 
+function selectQuest(quest) {
+  selectedQuest = quest;
+
+  if (quest === "training") {
+    questReward = 50;
+  } else if (quest === "study") {
+    questReward = 30;
+  } else if (quest === "challenge") {
+    questReward = 75;
+  }
+
+  alert("⚔️ Quest Selected!\nReward: +" + questReward + " XP");
+    }
 function startQuest() {
   document.getElementById("questPopup").style.display = "block";
 }
