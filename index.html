@@ -182,7 +182,10 @@ document.getElementById("intelligenceText").innerHTML = intelligence;
   currentLevel = currentLevel + 1;
 
   document.getElementById("levelText").innerHTML = currentLevel;
-
+if (currentLevel === 3) {
+  document.getElementById("dungeonGate").style.display = "block";
+  alert("⚔️ JOB CHANGE QUEST!\n\nD-Rank Dungeon has appeared!");
+                          }
   alert("🎉 LEVEL UP!\nYou are now Level " + currentLevel + "!");
 }
   document.querySelector(".xp-fill").style.width = xp + "%";
