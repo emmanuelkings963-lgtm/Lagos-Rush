@@ -125,7 +125,42 @@ onclick="enterDungeon()">
     <strong>D-RANK</strong><br>
     DUNGEON
   </div>
+<div id="dungeonScreen" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#050008;
+  color:white;
+  text-align:center;
+  z-index:2000;
+  padding-top:80px;
+">
 
+  <h1 style="color:#00aaff;">
+    ⚔️ D-RANK DUNGEON ⚔️
+  </h1>
+
+  <h2>🐍 GIANT SNAKE 🐍</h2>
+
+  <p>The dungeon boss has appeared.</p>
+
+  <p>Training Progress:</p>
+
+  <h2>
+    <span id="trainingProgress">0</span> / 50
+  </h2>
+
+  <button onclick="addTraining()">
+    ⚔️ TRAIN
+  </button>
+
+  <br><br>
+
+  <button onclick="completeDungeon()">
+    ✅ COMPLETE QUEST
+  </button>
+
+</div>
     </div>
 <div id="message" style="margin-top:20px; font-size:22px; color:#00ff99; font-weight:bold;"></div>
 
