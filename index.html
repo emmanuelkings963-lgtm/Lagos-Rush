@@ -144,7 +144,26 @@ onclick="enterDungeon()">
 </div>
     </div>
 <div id="message" style="margin-top:20px; font-size:22px; color:#00ff99; font-weight:bold;"></div>
-
+<div id="systemMessage" style="
+  display:none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:280px;
+  padding:25px;
+  background:#050510;
+  color:#00eaff;
+  border:2px solid #00aaff;
+  border-radius:15px;
+  box-shadow:0 0 25px #00aaff;
+  text-align:center;
+  z-index:5000;
+">
+  <h2>⚔️ SILENT SYSTEM ⚔️</h2>
+  <p id="systemMessageText"></p>
+  <button onclick="closeSystemMessage()">CONTINUE</button>
+</div>
 <script>
 let xp = 0;
 let selectedQuest = "";
@@ -225,8 +244,7 @@ document.getElementById("xpText").innerHTML = xp;
   document.getElementById("levelText").innerHTML = 2;
   alert("🎉 LEVEL UP!\nYou are now Level 2!");
     }
-  alert("🎉 Quest Completed!\n+50 XP");
-}
+  
 </script>
 </body>
 </html>
