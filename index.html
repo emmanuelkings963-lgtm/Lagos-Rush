@@ -194,7 +194,10 @@ function closeQuest() {
   document.getElementById("questPopup").style.display = "none";
   document.getElementById("systemPanel").style.display = "block";
 }
-
+function enterDungeon() {
+  document.getElementById("dungeonGate").style.display = "none";
+  document.getElementById("dungeonScreen").style.display = "block";
+}
 function completeQuest() {
     if (selectedQuest === "training") {
   strength += 2;
