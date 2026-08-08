@@ -206,7 +206,7 @@ document.getElementById("intelligenceText").innerHTML = intelligence;
   currentLevel = currentLevel + 1;
 
   document.getElementById("levelText").innerHTML = currentLevel;
-if (currentLevel === 3) {
+if (currentLevel >= 3) {
   document.querySelector("h2").style.display = "none";
   document.querySelector("ul").style.display = "none";
 
