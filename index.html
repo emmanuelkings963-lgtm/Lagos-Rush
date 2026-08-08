@@ -179,7 +179,17 @@ let questReward = 0;
 let strength = 10;
 let agility = 10;
 let intelligence = 10;
+function setPlayerName() {
+  let name = document.getElementById("nameInput").value.trim();
 
+  if (name === "") {
+    alert("⚠️ Please enter your name.");
+    return;
+  }
+
+  document.getElementById("playerName").innerHTML = name;
+  document.getElementById("nameSetup").style.display = "none";
+}
 function selectQuest(quest) {
   selectedQuest = quest;
 
