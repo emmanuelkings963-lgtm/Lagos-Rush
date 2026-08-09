@@ -247,6 +247,19 @@ function selectQuest(quest) {
 function startQuest() {
   document.getElementById("questPopup").style.display = "block";
 }
+    function completeDungeon() {
+  if (trainingCount < 50) {
+    alert("⚠️ Complete the training first!");
+    return;
+  }
+
+  document.getElementById("dungeonScreen").style.display = "none";
+  document.getElementById("lootScreen").style.display = "block";
+}
+
+function closeLoot() {
+  document.getElementById("lootScreen").style.display = "none";
+}
 let trainingCount = 0;
 
 function addTraining() {
