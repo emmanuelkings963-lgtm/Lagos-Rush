@@ -162,6 +162,34 @@ onclick="enterDungeon()">
 <div id="inventory">
   <p id="emptyInventory">Inventory Empty</p>
 </div>
+    <div id="level4Quest" style="
+  display:none;
+  margin:25px auto;
+  padding:20px;
+  width:280px;
+  background:#050510;
+  color:#00eaff;
+  border:2px solid #00aaff;
+  border-radius:15px;
+  box-shadow:0 0 20px #00aaff;
+  text-align:center;
+">
+
+  <h2>⚔️ LEVEL 3 COMPLETE ⚔️</h2>
+
+  <p>Moving to Level 4</p>
+
+  <h3>🏋️ TRAINING QUEST</h3>
+
+  <p>💪 Pushups: <span id="pushupProgress">0</span> / 30</p>
+  <p>🧍 Situps: <span id="situpProgress">0</span> / 30</p>
+  <p>🦵 Squats: <span id="squatProgress">0</span> / 40</p>
+
+  <button onclick="addPushup()">💪 PUSHUP</button>
+  <button onclick="addSitup()">🧍 SITUP</button>
+  <button onclick="addSquat()">🦵 SQUAT</button>
+
+    </div>
     <div id="lootScreen" style="
   display:none;
   position:fixed;
