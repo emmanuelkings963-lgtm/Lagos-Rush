@@ -289,7 +289,30 @@ function startQuest() {
   document.getElementById("dungeonScreen").style.display = "none";
   document.getElementById("lootScreen").style.display = "block";
 }
+let pushupCount = 0;
+let situpCount = 0;
+let squatCount = 0;
 
+function addPushup() {
+  if (pushupCount < 30) {
+    pushupCount++;
+    document.getElementById("pushupProgress").innerHTML = pushupCount;
+  }
+}
+
+function addSitup() {
+  if (situpCount < 30) {
+    situpCount++;
+    document.getElementById("situpProgress").innerHTML = situpCount;
+  }
+}
+
+function addSquat() {
+  if (squatCount < 40) {
+    squatCount++;
+    document.getElementById("squatProgress").innerHTML = squatCount;
+  }
+                          }
 function closeLoot() {
   document.getElementById("lootScreen").style.display = "none";
 
