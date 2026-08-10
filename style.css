@@ -81,3 +81,66 @@ button:hover {
     box-shadow: 0 0 20px #00aaff, 0 0 50px #0066ff;
   }
 }
+/* ===== SILENT SYSTEM LAYOUT ===== */
+
+body {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#nameSetup,
+.xp-bar,
+#inventory,
+#level4Quest {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#inventory {
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 25px;
+}
+
+#level4Quest {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+#level4Quest button {
+  margin: 5px;
+}
+
+#lootScreen,
+#dungeonScreen,
+#systemMessage,
+#questPopup,
+#systemPanel {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.xp-bar {
+  width: 90%;
+  max-width: 500px;
+  margin-top: 15px;
+  margin-bottom: 25px;
+}
+
+ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+ul li {
+  margin: 8px 0;
+}
+
+h1,
+h2,
+h3,
+p {
+  text-align: center;
+    }
