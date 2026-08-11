@@ -331,6 +331,7 @@ function addPushup() {
   if (pushupCount < 30) {
     pushupCount++;
     document.getElementById("pushupProgress").innerHTML = pushupCount;
+      checkLevel4Complete();
   }
 }
 
@@ -338,6 +339,7 @@ function addSitup() {
   if (situpCount < 30) {
     situpCount++;
     document.getElementById("situpProgress").innerHTML = situpCount;
+      checkLevel4Complete();
   }
 }
 
@@ -345,8 +347,9 @@ function addSquat() {
   if (squatCount < 40) {
     squatCount++;
     document.getElementById("squatProgress").innerHTML = squatCount;
+      checkLevel4Complete();
   }
-                          }
+ }
     let availableStatPoints = 0;
 
 function checkLevel4Complete() {
