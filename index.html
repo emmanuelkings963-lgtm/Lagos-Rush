@@ -190,6 +190,40 @@ onclick="enterDungeon()">
   <button onclick="addSquat()">🦵 SQUAT</button>
 
     </div>
+    <div id="statReward" style="
+  display:none;
+  margin:20px auto;
+  padding:20px;
+  width:280px;
+  background:#050510;
+  color:#00eaff;
+  border:2px solid #00aaff;
+  border-radius:15px;
+  box-shadow:0 0 20px #00aaff;
+  text-align:center;
+">
+
+  <h2>⚔️ TRAINING COMPLETE ⚔️</h2>
+
+  <p>⭐ Reward: +40 XP</p>
+
+  <h3>📊 STAT POINTS: <span id="statPoints">3</span></h3>
+
+  <p>Choose where to spend your points:</p>
+
+  <button onclick="addStat('strength')">
+    💪 STR +1
+  </button>
+
+  <button onclick="addStat('agility')">
+    ⚡ AGI +1
+  </button>
+
+  <button onclick="addStat('intelligence')">
+    🧠 INT +1
+  </button>
+
+    </div>
     <div id="lootScreen" style="
   display:none;
   position:fixed;
