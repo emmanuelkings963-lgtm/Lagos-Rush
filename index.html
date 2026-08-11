@@ -347,6 +347,48 @@ function addSquat() {
     document.getElementById("squatProgress").innerHTML = squatCount;
   }
                           }
+    let availableStatPoints = 0;
+
+function checkLevel4Complete() {
+  if (
+    pushupCount >= 30 &&
+    situpCount >= 30 &&
+    squatCount >= 40
+  ) {
+    availableStatPoints = 3;
+
+    document.getElementById("statPoints").innerHTML = availableStatPoints;
+    document.getElementById("statReward").style.display = "block";
+  }
+}
+
+function addStat(stat) {
+  if (availableStatPoints <= 0) {
+    return;
+  }
+
+  if (stat === "strength") {
+    strength++;
+    document.getElementById("strengthText").innerHTML = strength;
+  }
+
+  if (stat === "agility") {
+    agility++;
+    document.getElementById("agilityText").innerHTML = agility;
+  }
+
+  if (stat === "intelligence") {
+    intelligence++;
+    document.getElementById("intelligenceText").innerHTML = intelligence;
+  }
+
+  availableStatPoints--;
+  document.getElementById("statPoints").innerHTML = availableStatPoints;
+
+  if (availableStatPoints === 0) {
+    document.getElementById("statReward").style.display = "none";
+  }
+        }
 function closeLoot() {
   document.getElementById("lootScreen").style.display = "none";
 document.getElementById("level4Quest").style.display = "block";
