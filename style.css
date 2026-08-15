@@ -1,146 +1,244 @@
+here/* ================================
+   SILENT SYSTEM — MAIN STYLE
+================================ */
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-    background-color: #121212;
-    color: white;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 40px;
-}
+  margin: 0;
+  padding: 30px 20px;
+  min-height: 100vh;
 
-h1 {
-    color: #00bfff;
-}
-
-h2 {
-    color: #66ccff;
-}
-
-p {
-    font-size: 18px;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    margin: 10px 0;
-}body {
-  background: #0b0b0b;
-  color: #00aaff;
+  background: #050510;
+  color: #ffffff;
   font-family: Arial, sans-serif;
   text-align: center;
 }
 
+/* ================================
+   HEADINGS
+================================ */
+
 h1 {
-  font-size: 40px;
-  text-shadow: 0 0 10px #00aaff;
+  color: #00bfff;
+  font-size: 36px;
+  text-shadow:
+    0 0 10px #00aaff,
+    0 0 25px #0066ff;
 }
 
-button {
-  background: transparent;
-  color: #00aaff;
-  border: 2px solid #00aaff;
-  padding: 12px 25px;
+h2 {
+  color: #66ccff;
+  text-shadow: 0 0 8px #00aaff;
+}
+
+h3 {
+  color: #00eaff;
+}
+
+p {
   font-size: 18px;
-  border-radius: 8px;
-  cursor: pointer;
 }
 
-button:hover {
-  background: #00aaff;
-  color: black;
-}
-.xp-bar {
-  width: 80%;
-  height: 20px;
-  background: #333;
-  border-radius: 10px;
-  margin: 20px auto;
-  overflow: hidden;
-}
+/* ================================
+   MAIN CONTAINER
+================================ */
 
-.xp-fill {
-  width: 20%;
-  height: 100%;
-  background: #00aaff;
-}
-@keyframes dungeonPulse {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 20px #00aaff, 0 0 50px #0066ff;
-  }
-
-  50% {
-    transform: scale(1.08);
-    box-shadow: 0 0 35px #00aaff, 0 0 80px #0066ff;
-  }
-
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 20px #00aaff, 0 0 50px #0066ff;
-  }
-}
-/* ===== SILENT SYSTEM LAYOUT ===== */
-
-body {
+body > * {
   max-width: 700px;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-#nameSetup,
-.xp-bar,
-#inventory,
-#level4Quest {
   margin-left: auto;
   margin-right: auto;
 }
 
-#inventory {
-  text-align: center;
-  margin-top: 15px;
-  margin-bottom: 25px;
+/* ================================
+   PLAYER NAME
+================================ */
+
+#nameSetup {
+  margin: 25px auto;
+  padding: 20px;
+
+  max-width: 400px;
+
+  background: #101020;
+  border: 2px solid #00aaff;
+  border-radius: 15px;
+
+  box-shadow: 0 0 20px #0066ff;
 }
 
-#level4Quest {
+#nameInput {
+  width: 90%;
+  padding: 12px;
+  margin: 10px;
+
+  background: #050510;
+  color: white;
+
+  border: 2px solid #00aaff;
+  border-radius: 8px;
+
+  font-size: 16px;
+}
+
+/* ================================
+   BUTTONS
+================================ */
+
+button {
+  background: #050510;
+  color: #00aaff;
+
+  border: 2px solid #00aaff;
+  border-radius: 8px;
+
+  padding: 12px 20px;
+  margin: 5px;
+
+  font-size: 16px;
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #00aaff;
+  color: #000;
+
+  box-shadow: 0 0 15px #00aaff;
+}
+
+/* ================================
+   QUEST LIST
+================================ */
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin: 10px 0;
+}
+
+/* ================================
+   XP BAR
+================================ */
+
+.xp-bar {
+  width: 90%;
+  max-width: 500px;
+
+  height: 22px;
+
+  margin: 20px auto;
+
+  background: #222;
+  border: 1px solid #00aaff;
+
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  box-shadow: 0 0 10px #0066ff;
+}
+
+.xp-fill {
+  width: 0%;
+  height: 100%;
+
+  background: #00aaff;
+
+  transition: width 0.4s;
+}
+
+/* ================================
+   INVENTORY
+================================ */
+
+#inventory {
   margin-top: 20px;
   margin-bottom: 30px;
+}
+
+/* ================================
+   LEVEL 4 QUEST
+================================ */
+
+#level4Quest {
+  margin: 25px auto;
+  padding: 20px;
+
+  width: 280px;
+
+  background: #050510;
+  color: #00eaff;
+
+  border: 2px solid #00aaff;
+  border-radius: 15px;
+
+  box-shadow: 0 0 20px #00aaff;
 }
 
 #level4Quest button {
   margin: 5px;
 }
 
-#lootScreen,
-#dungeonScreen,
-#systemMessage,
-#questPopup,
-#systemPanel {
-  max-width: 100%;
-  box-sizing: border-box;
+/* ================================
+   DUNGEON GATE
+================================ */
+
+@keyframes dungeonPulse {
+
+  0% {
+    transform: scale(1);
+    box-shadow:
+      0 0 20px #00aaff,
+      0 0 50px #0066ff;
+  }
+
+  50% {
+    transform: scale(1.08);
+    box-shadow:
+      0 0 35px #00aaff,
+      0 0 80px #0066ff;
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 20px #00aaff,
+      0 0 50px #0066ff;
+  }
 }
 
-.xp-bar {
-  width: 90%;
-  max-width: 500px;
-  margin-top: 15px;
-  margin-bottom: 25px;
-}
+/* ================================
+   MOBILE
+================================ */
 
-ul {
-  padding-left: 0;
-  list-style: none;
-}
+@media (max-width: 600px) {
 
-ul li {
-  margin: 8px 0;
-}
+  body {
+    padding: 20px 10px;
+  }
 
-h1,
-h2,
-h3,
-p {
-  text-align: center;
+  h1 {
+    font-size: 28px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  button {
+    font-size: 15px;
+    padding: 10px 15px;
+  }
+
     }
