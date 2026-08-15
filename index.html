@@ -388,14 +388,213 @@ function addStat(stat) {
   availableStatPoints--;
   document.getElementById("statPoints").innerHTML = availableStatPoints;
 
-  if (availableStatPoints === 0) {
-    document.getElementById("statReward").style.display = "none";
+
+<script>
+let xp = 0;
+let selectedQuest = "";
+let questReward = 0;
+
+let strength = 10;
+let agility = 10;
+let intelligence = 10;
+
+let trainingCount = 0;
+let pushupCount = 0;
+let situpCount = 0;
+let squatCount = 0;
+let availableStatPoints = 0;
+
+
+/* =========================
+   PLAYER
+========================= */
+
+function setPlayerName() {
+  let name = document.getElementById("nameInput").value.trim();
+
+  if (name === "") {
+    alert("⚠️ Please enter your name.");
+    return;
   }
-        }
+
+  document.getElementById("playerName").innerText = name;
+  document.getElementById("nameSetup").style.display = "none";
+}
+
+
+/* =========================
+   QUEST SYSTEM
+========================= */
+
+function selectQuest(quest) {
+  selectedQuest = quest;
+
+  if (quest === "training") {
+    questReward = 50;
+  } else if (quest === "study") {
+    questReward = 30;
+  } else if (quest === "challenge") {
+    questReward = 75;
+  }
+
+  alert("⚔️ Quest Selected!\nReward: +" + questReward + " XP");
+}
+
+function startQuest() {
+  document.getElementById("questPopup").style.display = "block";
+}
+
+function closeQuest() {
+  document.getElementById("questPopup").style.display = "none";
+  document.getElementById("systemPanel").style.display = "block";
+}
+
+
+/* =========================
+   XP + LEVEL SYSTEM
+========================= */
+
+function completeQuest() {
+
+  if (selectedQuest === "") {
+    alert("⚠️ Select a quest first!");
+    return;
+  }
+
+  /* Stat rewards */
+
+  if (selectedQuest === "training") {
+    strength += 2;
+  }
+
+  if (selectedQuest === "study") {
+    intelligence += 2;
+  }
+
+  if (selectedQuest === "challenge") {
+    agility += 2;
+  }
+
+  /* Update stats */
+
+  document.getElementById("strengthText").innerText = strength;
+  document.getElementById("agilityText").innerText = agility;
+  document.getElementById("intelligenceText").innerText = intelligence;
+
+  /* Give XP */
+
+  xp += questReward;
+
+  /* Level up */
+
+  while (xp >= 100) {
+
+    xp -= 100;
+
+    let currentLevel = parseInt(
+      document.getElementById("levelText").innerText
+    );
+
+    currentLevel++;
+
+    document.getElementById("levelText").innerText = currentLevel;
+
+    alert(
+      "🎉 LEVEL UP!\n\n" +
+      "You are now Level " +
+      currentLevel +
+      "!"
+    );
+
+    /* Unlock D-Rank Dungeon at Level 3 */
+
+    if (currentLevel === 3) {
+
+      document.getElementById("dungeonGate").style.display = "block";
+
+      alert(
+        "⚔️ JOB CHANGE QUEST!\n\n" +
+        "D-Rank Dungeon has appeared!"
+      );
+    }
+  }
+
+  updateXP();
+
+  selectedQuest = "";
+  questReward = 0;
+}
+
+
+/* =========================
+   UPDATE XP BAR
+========================= */
+
+function updateXP() {
+
+  document.querySelector(".xp-fill").style.width =
+    xp + "%";
+
+  document.getElementById("xpText").innerText =
+    xp;
+}
+
+
+/* =========================
+   D-RANK DUNGEON
+========================= */
+
+function enterDungeon() {
+
+  document.getElementById("dungeonGate").style.display =
+    "none";
+
+  document.getElementById("dungeonScreen").style.display =
+    "block";
+}
+
+function addTraining() {
+
+  if (trainingCount < 50) {
+
+    trainingCount++;
+
+    document.getElementById("trainingProgress").innerText =
+      trainingCount;
+  }
+}
+
+function completeDungeon() {
+
+  if (trainingCount < 50) {
+
+    alert("⚠️ Complete the training first!");
+
+    return;
+  }
+
+  document.getElementById("dungeonScreen").style.display =
+    "none";
+
+  document.getElementById("lootScreen").style.display =
+    "block";
+}
+
+
+/* =========================
+   LOOT
+========================= */
+
 function closeLoot() {
-  document.getElementById("lootScreen").style.display = "none";
-document.getElementById("level4Quest").style.display = "block";
-  document.getElementById("emptyInventory").style.display = "none";
+
+  document.getElementById("lootScreen").style.display =
+    "none";
+
+  document.getElementById("level4Quest").style.display =
+    "block";
+
+  document.getElementById("emptyInventory").style.display =
+    "none";
 
   document.getElementById("inventory").innerHTML += `
     <div style="
@@ -414,68 +613,107 @@ document.getElementById("level4Quest").style.display = "block";
     </div>
   `;
 }
-let trainingCount = 0;
 
-function addTraining() {
-  if (trainingCount < 50) {
-    trainingCount++;
-    document.getElementById("trainingProgress").innerHTML = trainingCount;
+
+/* =========================
+   LEVEL 4 TRAINING
+========================= */
+
+function addPushup() {
+
+  if (pushupCount < 30) {
+
+    pushupCount++;
+
+    document.getElementById("pushupProgress").innerText =
+      pushupCount;
+
+    checkLevel4Complete();
   }
 }
-function closeQuest() {
-  document.getElementById("questPopup").style.display = "none";
-  document.getElementById("systemPanel").style.display = "block";
-}
-function enterDungeon() {
-  document.getElementById("dungeonGate").style.display = "none";
-  document.getElementById("dungeonScreen").style.display = "block";
-}
-function completeQuest() {
-    if (selectedQuest === "training") {
-  strength += 2;
-}
 
-if (selectedQuest === "study") {
-  intelligence += 2;
+function addSitup() {
+
+  if (situpCount < 30) {
+
+    situpCount++;
+
+    document.getElementById("situpProgress").innerText =
+      situpCount;
+
+    checkLevel4Complete();
+  }
 }
 
-if (selectedQuest === "challenge") {
-  agility += 2;
+function addSquat() {
+
+  if (squatCount < 40) {
+
+    squatCount++;
+
+    document.getElementById("squatProgress").innerText =
+      squatCount;
+
+    checkLevel4Complete();
+  }
 }
 
-document.getElementById("strengthText").innerHTML = strength;
-document.getElementById("agilityText").innerHTML = agility;
-document.getElementById("intelligenceText").innerHTML = intelligence;
-    xp = xp + questReward;
-  if (xp >= 100) {
-  xp = xp - 100;
 
-  let currentLevel = parseInt(
-    document.getElementById("levelText").innerHTML
-  );
+/* =========================
+   STAT REWARD
+========================= */
 
-  currentLevel = currentLevel + 1;
+function checkLevel4Complete() {
 
-  document.getElementById("levelText").innerHTML = currentLevel;
-if (currentLevel >= 3) {
-  document.querySelector("h2").style.display = "none";
-  document.querySelector("ul").style.display = "none";
+  if (
+    pushupCount >= 30 &&
+    situpCount >= 30 &&
+    squatCount >= 40
+  ) {
 
-  document.querySelector("button[onclick='startQuest()']").style.display = "none";
-  document.querySelector("button[onclick='completeQuest()']").style.display = "none";
+    availableStatPoints = 3;
 
-  document.getElementById("dungeonGate").style.display = "block";
+    document.getElementById("statPoints").innerText =
+      availableStatPoints;
 
-  alert("⚔️ JOB CHANGE QUEST!\n\nD-Rank Dungeon has appeared!");
+    document.getElementById("statReward").style.display =
+      "block";
+  }
 }
-  alert("🎉 LEVEL UP!\nYou are now Level " + currentLevel + "!");
-}
-  document.querySelector(".xp-fill").style.width = xp + "%";
-document.getElementById("xpText").innerHTML = xp;
-    if (xp >= 100 && document.getElementById("levelText").innerHTML == "1") {
-  document.getElementById("levelText").innerHTML = 2;
-  alert("🎉 LEVEL UP!\nYou are now Level 2!");
-    }
+
+function addStat(stat) {
+
+  if (availableStatPoints <= 0) {
+    return;
+  }
+
+  if (stat === "strength") {
+    strength++;
+    document.getElementById("strengthText").innerText =
+      strength;
+  }
+
+  if (stat === "agility") {
+    agility++;
+    document.getElementById("agilityText").innerText =
+      agility;
+  }
+
+  if (stat === "intelligence") {
+    intelligence++;
+    document.getElementById("intelligenceText").innerText =
+      intelligence;
+  }
+
+  availableStatPoints--;
+
+  document.getElementById("statPoints").innerText =
+    availableStatPoints;
+
+  if (availableStatPoints === 0) {
+    document.getElementById("statReward").style.display =
+      "none";
+  }
 }
 </script>
 </body>
