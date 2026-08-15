@@ -6,23 +6,71 @@
 </head>
 <body><h1>⚔️ SILENT SYSTEM ⚔️</h1>
 
-<h2>Player: <span id="playerName">Unknown</span></h2>
-<div id="nameSetup">
-  <p>⚔️ SYSTEM ONLINE</p>
-  <p>Enter your name, Player:</p>
+<!-- =========================
+     PLAYER SYSTEM
+========================= -->
 
-  <input id="nameInput" type="text" placeholder="Enter your name">
+<div id="playerPanel">
 
-  <button onclick="setPlayerName()">CONFIRM</button>
-</div>
-<p>Rank: E-Rank</p>
-<p>Level: <span id="levelText">1</span></p>
-    <p>XP: <span id="xpText">0</span> / 100</p>
-    <p>⚔️ Strength: <span id="strengthText">10</span></p>
-<p>⚡ Agility: <span id="agilityText">10</span></p>
-<p>🧠 Intelligence: <span id="intelligenceText">10</span></p>
-<div class="xp-bar">
-  <div class="xp-fill"></div>
+  <h2>👤 PLAYER</h2>
+
+  <h3>
+    Player:
+    <span id="playerName">Unknown</span>
+  </h3>
+
+  <div id="nameSetup">
+
+    <p>⚔️ SYSTEM ONLINE</p>
+    <p>Enter your name, Player:</p>
+
+    <input
+      id="nameInput"
+      type="text"
+      placeholder="Enter your name"
+    >
+
+    <br>
+
+    <button onclick="setPlayerName()">
+      CONFIRM
+    </button>
+
+  </div>
+
+  <p>🏆 Rank: <span id="rankText">E-Rank</span></p>
+
+  <p>
+    📈 Level:
+    <span id="levelText">1</span>
+  </p>
+
+  <p>
+    ⭐ XP:
+    <span id="xpText">0</span> / 100
+  </p>
+
+  <div class="xp-bar">
+    <div class="xp-fill"></div>
+  </div>
+
+  <h3>📊 STATS</h3>
+
+  <p>
+    💪 Strength:
+    <span id="strengthText">10</span>
+  </p>
+
+  <p>
+    ⚡ Agility:
+    <span id="agilityText">10</span>
+  </p>
+
+  <p>
+    🧠 Intelligence:
+    <span id="intelligenceText">10</span>
+  </p>
+
 </div>
 
 <h2>Quests</h2>
