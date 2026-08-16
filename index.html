@@ -102,7 +102,18 @@
 
     <p id="dailyStatus"></p>
   </div>
+<div class="questCard">
+  <h3>📚 STUDY QUEST</h3>
 
+  <p>🧠 Study for 30 minutes</p>
+  <p>⭐ Reward: +30 XP</p>
+
+  <button onclick="completeStudyQuest()">
+    📖 COMPLETE STUDY
+  </button>
+
+  <p id="studyStatus"></p>
+</div>
 </div>
     
 
@@ -360,7 +371,10 @@ let pushupCount = 0;
 let situpCount = 0;
 let squatCount = 0;
 let availableStatPoints = 0;
-
+let dailyPushups = 0;
+let dailySitups = 0;
+let dailySquats = 0;
+let dailyCompleted = false;
 
 /* =========================
    PLAYER
@@ -382,9 +396,65 @@ function setPlayerName() {
 /* =========================
    QUEST SYSTEM
 ========================= */
+function addDailyPushup() {
+  if (dailyCompleted) return;
 
+  if (dailyPushups < 30) {
+    dailyPushups++;
+    document.getElementById("dailyPushups").innerText = dailyPushups;
+  }
+}
 
+function addDailySitup() {
+  if (dailyCompleted) return;
 
+  if (dailySitups < 30) {
+    dailySitups++;
+    document.getElementById("dailySitups").innerText = dailySitups;
+  }
+}
+
+function addDailySquat() {
+  if (dailyCompleted) return;
+
+  if (dailySquats < 40) {
+    dailySquats++;
+    document.getElementById("dailySquats").innerText = dailySquats;
+  }
+}
+function completeDailyExercise() {
+  if (dailyPushups < 30 || dailySitups < 30 || dailySquats < 40) {
+    alert("⚠️ Complete all exercises first!");
+    return;
+  }
+
+  if (dailyCompleted) {
+    alert("⚠️ You already completed today's quest!");
+    return;
+  }
+
+  dailyCompleted = true;
+
+  xp += 50;
+
+  document.getElementById("dailyStatus").innerText =
+    "✅ DAILY QUEST COMPLETE! Come back tomorrow.";
+
+  document.querySelectorAll(".questCard button").forEach(button => {
+    button.disabled = true;
+  });
+
+  updateXP();
+    }
+function completeStudyQuest() {
+
+  xp += 30;
+
+  document.getElementById("studyStatus").innerText =
+    "✅ STUDY QUEST COMPLETE! +30 XP";
+
+  updateXP();
+    }
 function startQuest() {
   document.getElementById("questPopup").style.display = "block";
 }
