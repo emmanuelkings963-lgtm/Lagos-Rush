@@ -440,13 +440,16 @@ function completeDailyExercise() {
   document.getElementById("dailyStatus").innerText =
     "✅ DAILY QUEST COMPLETE! Come back tomorrow.";
 
-  document.querySelectorAll(".questCard button").forEach(button => {
-    button.disabled = true;
-  });
+  document.querySelector(".questCard:first-child button:last-of-type").disabled = true;
 
   updateXP();
     }
 function completeStudyQuest() {
+
+  if (document.getElementById("studyStatus").innerText !== "") {
+    alert("⚠️ Study quest already completed!");
+    return;
+  }
 
   xp += 30;
 
@@ -454,7 +457,7 @@ function completeStudyQuest() {
     "✅ STUDY QUEST COMPLETE! +30 XP";
 
   updateXP();
-    }
+}
 function startQuest() {
   document.getElementById("questPopup").style.display = "block";
 }
