@@ -47,7 +47,7 @@
 
   <p>
     ⭐ XP:
-    <span id="xpText">0</span> / 100
+    <span id="xpText">0</span> / 2000
   </p>
 
   <div class="xp-bar">
@@ -432,40 +432,17 @@ function completeQuest() {
 
   /* Level up */
 
-  while (xp >= 100) {
-
-    xp -= 100;
-
-    let currentLevel = parseInt(
-      document.getElementById("levelText").innerText
-    );
-
-    currentLevel++;
-
-    document.getElementById("levelText").innerText = currentLevel;
-
-    alert(
-      "🎉 LEVEL UP!\n\n" +
-      "You are now Level " +
-      currentLevel +
-      "!"
-    );
-
-    /* Unlock D-Rank Dungeon at Level 3 */
-
-    if (currentLevel === 3) {
-
-      document.getElementById("dungeonGate").style.display = "block";
-
-      alert(
-        "⚔️ JOB CHANGE QUEST!\n\n" +
-        "D-Rank Dungeon has appeared!"
-      );
-    }
-  }
+  
 
   updateXP();
+if (xp >= 2000) {
+  document.getElementById("dungeonGate").style.display = "block";
 
+  alert(
+    "⚔️ D-RANK ACHIEVED!\n\n" +
+    "D-Rank Dungeon has appeared!"
+  );
+}
   selectedQuest = "";
   questReward = 0;
 }
@@ -477,11 +454,28 @@ function completeQuest() {
 
 function updateXP() {
 
-  document.querySelector(".xp-fill").style.width =
-    xp + "%";
+  document.getElementById("xpText").innerText = xp;
 
-  document.getElementById("xpText").innerText =
-    xp;
+  document.querySelector(".xp-fill").style.width =
+  Math.min((xp / 20000) * 100, 100) + "%";
+
+  let rank = "E-Rank";
+
+  if (xp >= 20000) {
+    rank = "SS-Rank";
+  } else if (xp >= 15000) {
+    rank = "S-Rank";
+  } else if (xp >= 10000) {
+    rank = "A-Rank";
+  } else if (xp >= 6000) {
+    rank = "B-Rank";
+  } else if (xp >= 4000) {
+    rank = "C-Rank";
+  } else if (xp >= 2000) {
+    rank = "D-Rank";
+  }
+
+  document.getElementById("rankText").innerText = rank;
 }
 
 
