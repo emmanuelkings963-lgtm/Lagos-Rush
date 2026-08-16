@@ -81,48 +81,34 @@
 
   <h2>⚔️ QUESTS</h2>
 
-  <div class="questList">
+<div class="questList">
 
-    <div class="questCard">
-      <h3>🏃 Daily Training</h3>
-      <p>Reward: ⭐ +50 XP</p>
-      <button onclick="selectQuest('training')">
-        SELECT QUEST
-      </button>
-    </div>
+  <div class="questCard">
+    <h3>🏃 DAILY EXERCISE</h3>
 
-    <div class="questCard">
-      <h3>📚 Study Quest</h3>
-      <p>Reward: ⭐ +30 XP</p>
-      <button onclick="selectQuest('study')">
-        SELECT QUEST
-      </button>
-    </div>
+    <p>💪 Push-ups: <span id="dailyPushups">0</span> / 30</p>
+    <p>🧍 Sit-ups: <span id="dailySitups">0</span> / 30</p>
+    <p>🦵 Squats: <span id="dailySquats">0</span> / 40</p>
 
-    <div class="questCard">
-      <h3>🎯 Challenge Quest</h3>
-      <p>Reward: ⭐ +75 XP</p>
-      <button onclick="selectQuest('challenge')">
-        SELECT QUEST
-      </button>
-    </div>
+    <button onclick="addDailyPushup()">💪 PUSH-UP</button>
+    <button onclick="addDailySitup()">🧍 SIT-UP</button>
+    <button onclick="addDailySquat()">🦵 SQUAT</button>
 
+    <p>⭐ Reward: +50 XP</p>
+
+    <button onclick="completeDailyExercise()">
+      ✅ COMPLETE QUEST
+    </button>
+
+    <p id="dailyStatus"></p>
   </div>
 
-  <div id="selectedQuest">
-    <p>No quest selected.</p>
-  </div>
+</div>
+    
 
-  <button onclick="startQuest()">
-    ⚔️ START QUEST
-  </button>
+    
 
-  <button onclick="completeQuest()">
-    ✅ COMPLETE QUEST
-  </button>
-
-      </div>
-<div id="questPopup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#111; color:#00ff99; border:2px solid #00aaff; padding:20px; border-radius:10px; width:300px;">
+  <div id="questPopup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#111; color:#00ff99; border:2px solid #00aaff; padding:20px; border-radius:10px; width:300px;">
   <h2>⚔️ SYSTEM ONLINE ⚔️</h2>
   <p>Welcome Player!</p>
   <p>New Quest Available:</p>
@@ -397,19 +383,7 @@ function setPlayerName() {
    QUEST SYSTEM
 ========================= */
 
-function selectQuest(quest) {
-  selectedQuest = quest;
 
-  if (quest === "training") {
-    questReward = 50;
-  } else if (quest === "study") {
-    questReward = 30;
-  } else if (quest === "challenge") {
-    questReward = 75;
-  }
-
-  alert("⚔️ Quest Selected!\nReward: +" + questReward + " XP");
-}
 
 function startQuest() {
   document.getElementById("questPopup").style.display = "block";
