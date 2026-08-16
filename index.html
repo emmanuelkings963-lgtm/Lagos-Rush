@@ -528,7 +528,19 @@ if (xp >= 2000) {
 function updateXP() {
 
   document.getElementById("xpText").innerText = xp;
+let level = 1;
 
+if (xp >= 1000) {
+  level = 5;
+} else if (xp >= 500) {
+  level = 4;
+} else if (xp >= 250) {
+  level = 3;
+} else if (xp >= 100) {
+  level = 2;
+}
+
+document.getElementById("levelText").innerText = level;
   document.querySelector(".xp-fill").style.width =
   Math.min((xp / 20000) * 100, 100) + "%";
 
