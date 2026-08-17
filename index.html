@@ -1,240 +1,392 @@
-<!DOCTYPE html>
-<html>
+here<!DOCTYPE html>
+<html lang="en">
+
 <head>
-  <link rel="stylesheet" href="style.css">
-  <title>Silent System</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
 
-  <style>
-    body {
-      text-align: center;
-    }
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    button {
-      margin: 5px;
-      padding: 10px 15px;
-      cursor: pointer;
-    }
+<title>Silent System</title>
 
-    .panel {
-      margin: 20px auto;
-      padding: 20px;
-      max-width: 500px;
-      background: #050510;
-      border: 2px solid #00aaff;
-      border-radius: 15px;
-      box-shadow: 0 0 20px #00aaff;
-    }
+<style>
 
-    .questCard {
-      margin: 15px auto;
-      padding: 20px;
-      max-width: 400px;
-      background: #101020;
-      border: 2px solid #00aaff;
-      border-radius: 15px;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    .xp-bar {
-      width: 90%;
-      height: 20px;
-      margin: 10px auto;
-      background: #222;
-      border-radius: 10px;
-      overflow: hidden;
-    }
+body {
+  margin: 0;
+  padding: 20px;
+  background: #050008;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
 
-    .xp-fill {
-      width: 0%;
-      height: 100%;
-      background: #00aaff;
-      transition: width 0.3s;
-    }
+h1 {
+  color: #00eaff;
+  text-shadow: 0 0 15px #00aaff;
+}
 
-    .hidden {
-      display: none !important;
-    }
+button {
+  padding: 12px 18px;
+  margin: 6px;
+  border: 2px solid #00aaff;
+  border-radius: 10px;
+  background: #050510;
+  color: #00eaff;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 10px #0066ff;
+}
 
-    .bossScreen {
-      position: fixed;
-      inset: 0;
-      z-index: 5000;
-      background: #050008;
-      color: white;
-      padding: 40px 15px;
-      overflow-y: auto;
-    }
+button:active {
+  transform: scale(0.96);
+}
 
-    .bossBox {
-      max-width: 500px;
-      margin: 20px auto;
-      padding: 25px;
-      background: #101020;
-      border: 3px solid #00aaff;
-      border-radius: 20px;
-      box-shadow: 0 0 30px #00aaff;
-    }
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 
-    .bossImage {
-      width: 250px;
-      max-width: 80%;
-      border-radius: 15px;
-      margin: 15px;
-    }
+input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid #00aaff;
+  background: #050510;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+}
 
-    .bossHp {
-      font-size: 24px;
-      color: #ff5555;
-    }
+.panel,
+.screen {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 25px;
+  background: #080812;
+  border: 2px solid #00aaff;
+  border-radius: 18px;
+  box-shadow: 0 0 25px #0066ff;
+}
 
-    .rewardBox {
-      padding: 15px;
-      margin-top: 15px;
-      border: 2px solid #00ff99;
-      border-radius: 12px;
-    }
+.screen {
+  display: none;
+}
 
-    #systemMessage {
-      position: fixed;
-      inset: 0;
-      z-index: 9000;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+.screen.active {
+  display: block;
+}
 
-    #systemMessageBox {
-      width: 280px;
-      padding: 25px;
-      background: #050510;
-      color: #00eaff;
-      border: 2px solid #00aaff;
-      border-radius: 15px;
-      box-shadow: 0 0 30px #00aaff;
-    }
-  </style>
+.menuButton {
+  display: block;
+  width: 90%;
+  max-width: 350px;
+  margin: 12px auto;
+  font-size: 17px;
+}
+
+.questCard,
+.itemCard,
+.bossCard,
+.statCard {
+  margin: 15px auto;
+  padding: 18px;
+  background: #101020;
+  border: 2px solid #0055aa;
+  border-radius: 14px;
+}
+
+.xp-bar,
+.bossBar,
+.playerBar {
+  width: 90%;
+  height: 20px;
+  margin: 15px auto;
+  background: #222;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.xp-fill {
+  width: 0%;
+  height: 100%;
+  background: #00eaff;
+  transition: width 0.4s;
+}
+
+.bossHpFill {
+  width: 100%;
+  height: 100%;
+  background: #ff3333;
+  transition: width 0.3s;
+}
+
+.playerHpFill {
+  width: 100%;
+  height: 100%;
+  background: #00ff66;
+  transition: width 0.3s;
+}
+
+.statRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 5px;
+  background: #101020;
+  border-radius: 8px;
+}
+
+.bossScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  background: #050008;
+  overflow-y: auto;
+  padding: 30px 15px;
+  display: none;
+}
+
+.bossScreen.active {
+  display: block;
+}
+
+.bossBox {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 25px;
+  background: #0b0b18;
+  border: 3px solid #00aaff;
+  border-radius: 20px;
+  box-shadow: 0 0 35px #0066ff;
+}
+
+.bossImage {
+  width: 260px;
+  max-width: 85%;
+  border-radius: 15px;
+  margin: 15px;
+  box-shadow: 0 0 25px #00aaff;
+}
+
+.bossHp {
+  color: #ff5555;
+  font-size: 22px;
+}
+
+.rewardBox {
+  padding: 18px;
+  margin-top: 20px;
+  border: 2px solid #00ff99;
+  border-radius: 12px;
+  color: #00ff99;
+}
+
+.secret {
+  color: #ffcc00;
+  text-shadow: 0 0 10px #ffaa00;
+}
+
+.curse {
+  color: #cc66ff;
+}
+
+.blessed {
+  color: #fff3a0;
+}
+
+.shadowButton {
+  border-color: #aa00ff;
+  color: #dd88ff;
+  box-shadow: 0 0 15px #7700aa;
+}
+
+.final {
+  color: #ff55ff;
+  text-shadow: 0 0 15px #aa00ff;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+/* SYSTEM POPUP */
+
+.systemOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(0,0,0,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.systemBox {
+  width: 90%;
+  max-width: 380px;
+  padding: 25px;
+  background: #080812;
+  border: 2px solid #00aaff;
+  border-radius: 18px;
+  box-shadow: 0 0 35px #0066ff;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h1>⚔️ SILENT SYSTEM ⚔️</h1>
 
-<!-- =========================
-     PLAYER
-========================= -->
+<!-- =====================================================
+     NAME SETUP
+===================================================== -->
 
-<div class="panel">
+<div id="nameSetup" class="panel">
 
-  <h2>👤 PLAYER</h2>
+  <h1>⚔️ SILENT SYSTEM ⚔️</h1>
 
-  <h3>
-    Player:
-    <span id="playerName">Unknown</span>
-  </h3>
+  <h2>⚔️ SYSTEM ONLINE</h2>
 
-  <div id="nameSetup">
+  <p>Welcome, Player.</p>
 
-    <p>⚔️ SYSTEM ONLINE</p>
+  <p>Enter your name:</p>
 
-    <input
-      id="nameInput"
-      type="text"
-      placeholder="Enter your name"
-    >
+  <input
+    id="nameInput"
+    type="text"
+    maxlength="20"
+    placeholder="Player Name"
+  >
 
-    <br><br>
+  <br><br>
 
-    <button onclick="setPlayerName()">
-      CONFIRM
-    </button>
-
-  </div>
-
-  <p>
-    🏆 Rank:
-    <span id="rankText">E-Rank</span>
-  </p>
-
-  <p>
-    📈 Level:
-    <span id="levelText">1</span> / 200
-  </p>
-
-  <p>
-    ⭐ XP:
-    <span id="xpText">0</span> / 70000
-  </p>
-
-  <div class="xp-bar">
-    <div class="xp-fill"></div>
-  </div>
-
-  <h3>📊 STATS</h3>
-
-  <p>
-    💪 Strength:
-    <span id="strengthText">10</span>
-  </p>
-
-  <p>
-    ⚡ Agility:
-    <span id="agilityText">10</span>
-  </p>
-
-  <p>
-    🧠 Intelligence:
-    <span id="intelligenceText">10</span>
-  </p>
-
-  <p>
-    👥 Shadow Army:
-    <span id="armyText">0</span>
-  </p>
-
-  <p>
-    👑 Title:
-    <span id="titleText">Player</span>
-  </p>
+  <button onclick="confirmName()">
+    CONFIRM
+  </button>
 
 </div>
 
 
-<!-- =========================
-     QUESTS
-========================= -->
+<!-- =====================================================
+     MAIN MENU
+===================================================== -->
 
-<div class="panel">
+<div id="mainMenu" class="panel hidden">
 
-  <h2>⚔️ QUESTS</h2>
+  <h1>⚔️ SILENT SYSTEM ⚔️</h1>
+
+  <h2>
+    Welcome,
+    <span id="menuPlayerName"></span>
+  </h2>
+
+  <p>
+    🏆 <span id="menuRank">E-Rank</span>
+  </p>
+
+  <p>
+    📈 Level
+    <span id="menuLevel">1</span> / 200
+  </p>
+
+  <p>
+    ⭐
+    <span id="menuXP">0</span>
+    / 70,000 XP
+  </p>
+
+  <div class="xp-bar">
+
+    <div
+      id="mainXPFill"
+      class="xp-fill">
+    </div>
+
+  </div>
+
+  <button
+    class="menuButton"
+    onclick="openScreen('trainingScreen')">
+
+    🏃 DAILY TRAINING
+
+  </button>
+
+  <button
+    class="menuButton"
+    onclick="openScreen('studyScreen')">
+
+    📚 STUDY QUEST
+
+  </button>
+
+  <button
+    class="menuButton"
+    onclick="openInventory()">
+
+    🎒 INVENTORY
+
+  </button>
+
+  <button
+    class="menuButton"
+    onclick="openStats()">
+
+    📊 STATS
+
+  </button>
+
+  <button
+    class="menuButton"
+    onclick="openBossProgression()">
+
+    ⚔️ BOSS PROGRESSION
+
+  </button>
+
+</div>
+
+
+<!-- =====================================================
+     DAILY TRAINING
+===================================================== -->
+
+<div id="trainingScreen" class="screen">
+
+  <h2>🏃 DAILY TRAINING</h2>
 
   <div class="questCard">
 
-    <h3>🏃 DAILY EXERCISE</h3>
+    <h3>💪 TRAINING QUEST</h3>
 
     <p>
-      💪 Push-ups:
+      Push-ups:
       <span id="dailyPushups">0</span> / 30
-    </p>
-
-    <p>
-      🧍 Sit-ups:
-      <span id="dailySitups">0</span> / 30
-    </p>
-
-    <p>
-      🦵 Squats:
-      <span id="dailySquats">0</span> / 40
     </p>
 
     <button onclick="addDailyPushup()">
       💪 PUSH-UP
     </button>
 
+    <p>
+      Sit-ups:
+      <span id="dailySitups">0</span> / 30
+    </p>
+
     <button onclick="addDailySitup()">
       🧍 SIT-UP
     </button>
+
+    <p>
+      Squats:
+      <span id="dailySquats">0</span> / 40
+    </p>
 
     <button onclick="addDailySquat()">
       🦵 SQUAT
@@ -242,56 +394,190 @@
 
     <p>⭐ Reward: +50 XP</p>
 
-    <button onclick="completeDailyExercise()">
+    <button
+      id="dailyCompleteButton"
+      onclick="completeDailyExercise()">
+
       ✅ COMPLETE QUEST
+
     </button>
 
     <p id="dailyStatus"></p>
 
   </div>
 
+  <button onclick="goHome()">
+    ↩️ BACK
+  </button>
+
+</div>
+
+
+<!-- =====================================================
+     STUDY
+===================================================== -->
+
+<div id="studyScreen" class="screen">
+
+  <h2>📚 STUDY QUEST</h2>
 
   <div class="questCard">
 
-    <h3>📚 STUDY QUEST</h3>
+    <h3>🧠 KNOWLEDGE QUEST</h3>
 
-    <p>🧠 Study for 30 minutes</p>
+    <p>
+      Study for 30 minutes.
+    </p>
 
-    <p>⭐ Reward: +30 XP</p>
+    <p>
+      ⭐ Reward: +30 XP
+    </p>
 
-    <button onclick="completeStudyQuest()">
+    <button
+      id="studyButton"
+      onclick="completeStudyQuest()">
+
       📖 COMPLETE STUDY
+
     </button>
 
     <p id="studyStatus"></p>
 
   </div>
 
+  <button onclick="goHome()">
+    ↩️ BACK
+  </button>
+
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      INVENTORY
-========================= -->
+===================================================== -->
 
-<div class="panel">
+<div id="inventoryScreen" class="screen">
 
   <h2>🎒 INVENTORY</h2>
 
-  <div id="inventory">
-    <p id="emptyInventory">
-      Inventory Empty
-    </p>
-  </div>
+  <div id="inventoryList"></div>
+
+  <button onclick="goHome()">
+    ↩️ BACK
+  </button>
 
 </div>
 
 
-<!-- =========================
-     BOSS SCREEN
-========================= -->
+<!-- =====================================================
+     STATS
+===================================================== -->
 
-<div id="bossScreen" class="bossScreen hidden">
+<div id="statsScreen" class="screen">
+
+  <h2>📊 PLAYER STATS</h2>
+
+  <div class="statCard">
+
+    <h3>
+      👤 <span id="statsName"></span>
+    </h3>
+
+    <div class="statRow">
+      <span>🏆 Rank</span>
+      <strong id="statsRank">E-Rank</strong>
+    </div>
+
+    <div class="statRow">
+      <span>📈 Level</span>
+      <strong id="statsLevel">1 / 200</strong>
+    </div>
+
+    <div class="statRow">
+      <span>⭐ XP</span>
+      <strong id="statsXP">0 / 70,000</strong>
+    </div>
+
+    <hr>
+
+    <div class="statRow">
+      <span>💪 Strength</span>
+      <strong id="statsStrength">10</strong>
+    </div>
+
+    <div class="statRow">
+      <span>⚡ Agility</span>
+      <strong id="statsAgility">10</strong>
+    </div>
+
+    <div class="statRow">
+      <span>🧠 Intelligence</span>
+      <strong id="statsIntelligence">10</strong>
+    </div>
+
+    <div class="statRow">
+      <span>❤️ Vitality</span>
+      <strong id="statsVitality">10</strong>
+    </div>
+
+    <div class="statRow">
+      <span>👁️ Perception</span>
+      <strong id="statsPerception">10</strong>
+    </div>
+
+    <hr>
+
+    <div class="statRow">
+      <span>❤️ Battle HP</span>
+      <strong id="statsHP">100</strong>
+    </div>
+
+    <div class="statRow">
+      <span>🎯 Crit Chance</span>
+      <strong id="statsCrit">5%</strong>
+    </div>
+
+    <div class="statRow">
+      <span>👥 Shadow Army</span>
+      <strong id="statsArmy">0</strong>
+    </div>
+
+    <div class="statRow">
+      <span>👑 Title</span>
+      <strong id="statsTitle">Player</strong>
+    </div>
+
+  </div>
+
+  <button onclick="goHome()">
+    ↩️ BACK
+  </button>
+
+</div>
+
+
+<!-- =====================================================
+     BOSS PROGRESSION
+===================================================== -->
+
+<div id="bossProgressionScreen" class="screen">
+
+  <h2>⚔️ BOSS PROGRESSION</h2>
+
+  <div id="bossProgressionList"></div>
+
+  <button onclick="goHome()">
+    ↩️ BACK
+  </button>
+
+</div>
+
+
+<!-- =====================================================
+     BOSS BATTLE
+===================================================== -->
+
+<div id="bossScreen" class="bossScreen">
 
   <div class="bossBox">
 
@@ -299,45 +585,128 @@
       ⚔️ BOSS BATTLE ⚔️
     </h1>
 
-    <h2 id="bossName">
-      Unknown
-    </h2>
+    <h2 id="bossName"></h2>
 
     <img
       id="bossImage"
       class="bossImage hidden"
-      src="snake.png"
+      src=""
       alt="Boss"
     >
 
     <p id="bossDescription"></p>
 
     <p class="bossHp">
+
       ❤️ Boss HP:
-      <span id="bossHp">100</span>
+      <span id="bossHP">0</span>
+      /
+      <span id="bossMaxHP">0</span>
+
     </p>
 
-    <button onclick="attackBoss()">
+    <div class="bossBar">
+
+      <div
+        id="bossHpFill"
+        class="bossHpFill">
+      </div>
+
+    </div>
+
+
+    <p>
+
+      ❤️ Player HP:
+      <span id="playerHP">0</span>
+      /
+      <span id="playerMaxHP">0</span>
+
+    </p>
+
+    <div class="playerBar">
+
+      <div
+        id="playerHpFill"
+        class="playerHpFill">
+      </div>
+
+    </div>
+
+
+    <p>
+      💪 Strength:
+      <span id="battleStrength">10</span>
+    </p>
+
+    <p>
+      ⚡ Agility:
+      <span id="battleAgility">10</span>
+    </p>
+
+    <p>
+      🧠 Intelligence:
+      <span id="battleIntelligence">10</span>
+    </p>
+
+    <p>
+      👁️ Perception:
+      <span id="battlePerception">10</span>
+    </p>
+
+    <p>
+      ⚔️ Attack Damage:
+      <span id="battleDamage">20</span>
+    </p>
+
+
+    <button
+      id="attackButton"
+      onclick="attackBoss()">
+
       ⚔️ ATTACK
+
     </button>
 
-    <button onclick="leaveBoss()">
-      ↩️ LEAVE
+
+    <button
+      id="summonButton"
+      class="shadowButton"
+      onclick="summonShadows()"
+      disabled>
+
+      🔒 SUMMON SHADOWS
+
     </button>
+
 
     <p id="battleMessage"></p>
 
+
     <div
       id="bossReward"
-      class="rewardBox hidden"
-    ></div>
+      class="rewardBox hidden">
+    </div>
+
 
     <button
       id="claimRewardButton"
       class="hidden"
-      onclick="claimBossReward()"
-    >
+      onclick="claimBossReward()">
+
       🎁 CLAIM REWARD
+
+    </button>
+
+
+    <br>
+
+    <button
+      id="leaveBossButton"
+      onclick="leaveBoss()">
+
+      ↩️ LEAVE
+
     </button>
 
   </div>
@@ -345,763 +714,3111 @@
 </div>
 
 
-<!-- =========================
-     SYSTEM MESSAGE
-========================= -->
+<!-- =====================================================
+     SYSTEM POPUP
+===================================================== -->
 
-<div id="systemMessage" class="hidden">
+<div
+  id="systemMessage"
+  class="systemOverlay hidden">
 
-  <div id="systemMessageBox">
+  <div class="systemBox">
 
-    <h2>⚔️ SILENT SYSTEM ⚔️</h2>
+    <h2>
+      ⚔️ SILENT SYSTEM ⚔️
+    </h2>
 
     <p id="systemMessageText"></p>
 
-    <button onclick="closeSystemMessage()">
-      CONTINUE
-    </button>
+    <div id="systemButtons">
+
+      <button onclick="closeSystemMessage()">
+        CONTINUE
+      </button>
+
+    </div>
 
   </div>
 
 </div>
 
 
-<!-- =========================
-     JAVASCRIPT
-========================= -->
-
 <script>
 
-let xp = 0;
 
-let strength = 10;
-let agility = 10;
-let intelligence = 10;
+/* =====================================================
+   PERMANENT SAVE SYSTEM
+===================================================== */
 
-let shadowArmy = 0;
+/*
+  localStorage keeps the player's save data
+  inside the browser/device.
 
-let playerTitle = "Player";
+  It survives:
 
-let dailyPushupCount = 0;
-let dailySitupCount = 0;
-let dailySquatCount = 0;
+  ✓ Page refresh
+  ✓ Closing the browser
+  ✓ Reopening the game
 
-let dailyCompleted = false;
-let studyCompleted = false;
+  It can still be removed if the user clears
+  browser/site data or clears the app's data.
+*/
+
+const SAVE_KEY =
+  "silentSystemPermanentSave_v3";
+
+
+/* =====================================================
+   GAME DATA
+===================================================== */
+
+let game = {
+
+  playerName: "",
+
+  xp: 0,
+
+  strength: 10,
+
+  agility: 10,
+
+  intelligence: 10,
+
+  vitality: 10,
+
+  perception: 10,
+
+  shadowArmy: 0,
+
+  title: "Player",
+
+  inventory: [],
+
+  defeatedBosses: [],
+
+  secretQuestUnlocked: false,
+
+  secretQuestAccepted: false,
+
+  secretQuestCompleted: false,
+
+  dailyPushups: 0,
+
+  dailySitups: 0,
+
+  dailySquats: 0,
+
+  dailyCompleted: false,
+
+  studyCompleted: false,
+
+  lastDailyDate: "",
+
+  strengthMilestones: [],
+
+  gameCompleted: false
+
+};
+
 
 let currentBoss = null;
-let bossHp = 100;
+
+let bossHP = 0;
+
 let bossDefeated = false;
 
-let defeatedBosses = [];
+let playerHP = 0;
 
-let gameCompleted = false;
+let playerMaxHP = 0;
 
+let shadowSummonsUsed = 0;
 
-/* =========================
-   PLAYER
-========================= */
 
-function setPlayerName() {
-
-  const name =
-    document.getElementById("nameInput").value.trim();
-
-  if (name === "") {
-
-    alert("⚠️ Please enter your name.");
-
-    return;
-  }
-
-  document.getElementById("playerName").innerText = name;
-
-  document.getElementById("nameSetup").style.display =
-    "none";
-}
-
-
-/* =========================
-   DAILY EXERCISE
-========================= */
-
-function addDailyPushup() {
-
-  if (dailyCompleted) return;
-
-  if (dailyPushupCount < 30) {
-
-    dailyPushupCount++;
-
-    document.getElementById("dailyPushups").innerText =
-      dailyPushupCount;
-  }
-}
-
-
-function addDailySitup() {
-
-  if (dailyCompleted) return;
-
-  if (dailySitupCount < 30) {
-
-    dailySitupCount++;
-
-    document.getElementById("dailySitups").innerText =
-      dailySitupCount;
-  }
-}
-
-
-function addDailySquat() {
-
-  if (dailyCompleted) return;
-
-  if (dailySquatCount < 40) {
-
-    dailySquatCount++;
-
-    document.getElementById("dailySquats").innerText =
-      dailySquatCount;
-  }
-}
-
-
-function completeDailyExercise() {
-
-  if (dailyCompleted) {
-
-    showSystemMessage(
-      "⚠️ Today's Daily Exercise is already complete."
-    );
-
-    return;
-  }
-
-  if (
-    dailyPushupCount < 30 ||
-    dailySitupCount < 30 ||
-    dailySquatCount < 40
-  ) {
-
-    showSystemMessage(
-      "⚠️ Complete all three exercise goals first."
-    );
-
-    return;
-  }
-
-  dailyCompleted = true;
-
-  gainXP(50);
-
-  document.getElementById("dailyStatus").innerText =
-    "✅ DAILY QUEST COMPLETE! +50 XP";
-
-  document.querySelectorAll(
-    ".questCard:first-child button"
-  ).forEach(button => {
-    button.disabled = true;
-  });
-}
-
-
-/* =========================
-   STUDY QUEST
-========================= */
-
-function completeStudyQuest() {
-
-  if (studyCompleted) {
-
-    showSystemMessage(
-      "⚠️ Study Quest already completed."
-    );
-
-    return;
-  }
-
-  studyCompleted = true;
-
-  gainXP(30);
-
-  document.getElementById("studyStatus").innerText =
-    "✅ STUDY QUEST COMPLETE! +30 XP";
-
-}
-
-
-/* =========================
-   XP
-========================= */
-
-function gainXP(amount) {
-
-  if (gameCompleted) return;
-
-  xp += amount;
-
-  if (xp > 70000) {
-    xp = 70000;
-  }
-
-  updateSystem();
-
-  checkBossGates();
-
-}
-
-
-/* =========================
-   LEVEL
-========================= */
-
-function calculateLevel() {
-
-  /*
-    70,000 XP = Level 200.
-
-    The level curve gradually increases
-    throughout the game.
-  */
-
-  let level =
-    Math.floor((xp / 70000) * 199) + 1;
-
-  if (level > 200) {
-    level = 200;
-  }
-
-  return level;
-}
-
-
-/* =========================
-   RANK
-========================= */
-
-function calculateRank() {
-
-  if (xp >= 20000) {
-    return "SS-Rank";
-  }
-
-  if (xp >= 10000) {
-    return "S-Rank";
-  }
-
-  if (xp >= 6000) {
-    return "B-Rank";
-  }
-
-  if (xp >= 3000) {
-    return "C-Rank";
-  }
-
-  if (xp >= 2000) {
-    return "D-Rank";
-  }
-
-  return "E-Rank";
-}
-
-
-/* =========================
-   UPDATE SYSTEM
-========================= */
-
-function updateSystem() {
-
-  document.getElementById("xpText").innerText =
-    xp;
-
-  document.getElementById("levelText").innerText =
-    calculateLevel();
-
-  document.getElementById("rankText").innerText =
-    calculateRank();
-
-  document.getElementById("strengthText").innerText =
-    strength;
-
-  document.getElementById("agilityText").innerText =
-    agility;
-
-  document.getElementById("intelligenceText").innerText =
-    intelligence;
-
-  document.getElementById("armyText").innerText =
-    shadowArmy;
-
-  document.getElementById("titleText").innerText =
-    playerTitle;
-
-  document.querySelector(".xp-fill").style.width =
-    ((xp / 70000) * 100) + "%";
-}
-
-
-/* =========================
-   BOSS DATA
-========================= */
+/* =====================================================
+   BOSS DATABASE
+===================================================== */
 
 const bosses = [
 
   {
     xp: 2000,
+
     name: "🐍 GIANT SNAKE",
+
     title: "D-RANK DUNGEON",
+
     description:
       "The first dungeon boss has appeared.",
-    reward:
-      "🗡️ VENOM FANG",
-    str: 50,
-    agi: 40,
-    int: 30,
+
+    image: "snake.png",
+
+    hp: 500,
+
+    defense: 10,
+
+    bossDamage: 18,
+
+    reward: "🗡️ VENOM FANG",
+
+    str: 20,
+
+    agi: 15,
+
+    int: 10,
+
+    vit: 15,
+
+    per: 10,
+
     rewardXP: 100
+
   },
+
 
   {
     xp: 2500,
+
     name: "🦁 LION KING",
+
     title: "SAVAGE TRIAL",
+
     description:
       "A powerful beast guards the next gate.",
-    reward:
-      "🦁 LION CLAW",
-    str: 60,
-    agi: 60,
-    int: 40,
+
+    image: "",
+
+    hp: 1000,
+
+    defense: 25,
+
+    bossDamage: 25,
+
+    reward: "🦁 LION CLAW",
+
+    str: 35,
+
+    agi: 30,
+
+    int: 20,
+
+    vit: 30,
+
+    per: 25,
+
     rewardXP: 150
+
   },
+
 
   {
     xp: 3000,
+
     name: "🐺 THREE-HEADED HOUND",
-    title: "🔒 SECRET QUEST",
+
+    title: "SECRET QUEST — SHADOW AWAKENING",
+
     description:
-      "A hidden quest has awakened. Defeat the guardian to begin the Shadow Monarch awakening.",
-    reward:
-      "🐺 CERBERUS FANG + 10,000 SHADOW SOLDIERS",
+      "The hidden guardian of the Shadow Awakening.",
+
+    image: "",
+
+    hp: 2500,
+
+    defense: 40,
+
+    bossDamage: 35,
+
+    reward: "🐺 CERBERUS FANG",
+
     str: 80,
+
     agi: 70,
+
     int: 80,
+
+    vit: 70,
+
+    per: 80,
+
     rewardXP: 300,
+
     secret: true
+
   },
+
 
   {
     xp: 6000,
+
     name: "🐉 ANCIENT DRAGON",
+
     title: "DRAGON TRIAL",
+
     description:
-      "An ancient dragon stands before the next gate.",
-    reward:
-      "🐉 DRAGON SCALE",
+      "An ancient dragon guards the next stage.",
+
+    image: "",
+
+    hp: 5000,
+
+    defense: 70,
+
+    bossDamage: 50,
+
+    reward: "🐉 DRAGON SCALE",
+
     str: 120,
+
     agi: 100,
+
     int: 150,
+
+    vit: 120,
+
+    per: 100,
+
     rewardXP: 500
+
   },
+
 
   {
     xp: 20000,
+
     name: "🐲 THREE-HEADED DRAGON",
+
     title: "MONARCH TRIAL",
+
     description:
-      "A legendary creature awaits the Shadow Monarch.",
-    reward:
-      "👑 DRAGON CROWN",
+      "A legendary enemy awaits the Shadow Monarch.",
+
+    image: "",
+
+    hp: 15000,
+
+    defense: 120,
+
+    bossDamage: 75,
+
+    reward: "👑 DRAGON CROWN",
+
     str: 250,
+
     agi: 200,
+
     int: 300,
+
+    vit: 250,
+
+    per: 200,
+
     rewardXP: 1000
+
   },
+
 
   {
     xp: 35000,
+
     name: "👹 ABYSSAL DEMON KING",
+
     title: "ABYSS GATE",
+
     description:
       "The Abyss Gate has opened.",
-    reward:
-      "👹 DEMON KING CORE",
+
+    image: "",
+
+    hp: 30000,
+
+    defense: 180,
+
+    bossDamage: 100,
+
+    reward: "👹 DEMON KING CORE",
+
     str: 350,
+
     agi: 300,
+
     int: 400,
+
+    vit: 350,
+
+    per: 300,
+
     rewardXP: 1500
+
   },
+
 
   {
     xp: 50000,
+
     name: "🌑 VOID TITAN",
+
     title: "VOID GATE",
+
     description:
-      "A colossal guardian blocks the final path.",
-    reward:
-      "🌑 VOID HEART",
+      "The Void Titan blocks the final path.",
+
+    image: "",
+
+    hp: 50000,
+
+    defense: 250,
+
+    bossDamage: 140,
+
+    reward: "🌑 VOID HEART",
+
     str: 500,
+
     agi: 450,
+
     int: 600,
+
+    vit: 500,
+
+    per: 450,
+
     rewardXP: 2500
+
   },
+
 
   {
     xp: 70000,
+
     name: "👑 ETERNAL SHADOW OVERLORD",
+
     title: "FINAL TRIAL",
+
     description:
-      "The final enemy has appeared. Defeat it to complete the Silent System.",
-    reward:
-      "👑 ETERNAL SHADOW CROWN",
+      "The final enemy stands before the completed Silent System.",
+
+    image: "",
+
+    hp: 100000,
+
+    defense: 400,
+
+    bossDamage: 200,
+
+    reward: "👑 ETERNAL SHADOW CROWN",
+
     str: 1000,
+
     agi: 1000,
+
     int: 1000,
-    rewardXP: 5000,
+
+    vit: 1000,
+
+    per: 1000,
+
+    rewardXP: 0,
+
     finalBoss: true
+
   }
 
 ];
 
 
-/* =========================
-   CHECK BOSS GATES
-========================= */
+/* =====================================================
+   SAVE
+===================================================== */
 
-function checkBossGates() {
+function saveGame() {
 
-  if (gameCompleted) return;
+  try {
 
-  for (let i = 0; i < bosses.length; i++) {
+    localStorage.setItem(
+      SAVE_KEY,
+      JSON.stringify(game)
+    );
 
-    const boss = bosses[i];
+  } catch(error) {
 
-    if (
-      xp >= boss.xp &&
-      !defeatedBosses.includes(boss.xp)
-    ) {
+    console.log(
+      "Save failed:",
+      error
+    );
 
-      openBossGate(boss);
-
-      return;
-    }
   }
+
 }
 
 
-/* =========================
+/* =====================================================
+   LOAD
+===================================================== */
+
+function loadGame() {
+
+  const saved =
+    localStorage.getItem(SAVE_KEY);
+
+  if (!saved) {
+    return;
+  }
+
+  try {
+
+    const data =
+      JSON.parse(saved);
+
+    game = {
+      ...game,
+      ...data
+    };
+
+  } catch(error) {
+
+    console.log(
+      "Save could not be loaded:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   DAILY RESET
+===================================================== */
+
+function checkDailyReset() {
+
+  const today =
+    new Date().toDateString();
+
+  if (
+    game.lastDailyDate !== today
+  ) {
+
+    game.dailyPushups = 0;
+
+    game.dailySitups = 0;
+
+    game.dailySquats = 0;
+
+    game.dailyCompleted = false;
+
+    game.studyCompleted = false;
+
+    game.lastDailyDate = today;
+
+    saveGame();
+
+  }
+
+}
+
+
+/* =====================================================
+   NAME
+===================================================== */
+
+function confirmName() {
+
+  const input =
+    document.getElementById(
+      "nameInput"
+    );
+
+  const name =
+    input.value.trim();
+
+  if (name === "") {
+
+    showSystemMessage(
+      "⚠️ Please enter your name.",
+      false
+    );
+
+    return;
+
+  }
+
+  game.playerName =
+    name;
+
+  saveGame();
+
+  document
+    .getElementById(
+      "nameSetup"
+    )
+    .classList.add(
+      "hidden"
+    );
+
+  document
+    .getElementById(
+      "mainMenu"
+    )
+    .classList.remove(
+      "hidden"
+    );
+
+  updateUI();
+
+}
+
+
+/* =====================================================
+   SCREEN
+===================================================== */
+
+function openScreen(id) {
+
+  document
+    .querySelectorAll(
+      ".screen"
+    )
+    .forEach(screen => {
+
+      screen.classList.remove(
+        "active"
+      );
+
+    });
+
+  document
+    .getElementById(id)
+    .classList.add(
+      "active"
+    );
+
+}
+
+
+function goHome() {
+
+  document
+    .querySelectorAll(
+      ".screen"
+    )
+    .forEach(screen => {
+
+      screen.classList.remove(
+        "active"
+      );
+
+    });
+
+  updateUI();
+
+}
+
+
+/* =====================================================
+   XP
+===================================================== */
+
+function gainXP(amount) {
+
+  if (
+    game.gameCompleted
+  ) {
+    return;
+  }
+
+  game.xp += amount;
+
+  if (
+    game.xp > 70000
+  ) {
+
+    game.xp =
+      70000;
+
+  }
+
+  saveGame();
+
+  updateUI();
+
+  checkStrengthLootMilestones();
+
+  checkSecretQuest();
+
+  checkBossGate();
+
+}
+
+
+/* =====================================================
+   LEVEL
+===================================================== */
+
+function getLevel() {
+
+  let level =
+    Math.floor(
+      game.xp / 350
+    ) + 1;
+
+  if (
+    level > 200
+  ) {
+
+    level =
+      200;
+
+  }
+
+  return level;
+
+}
+
+
+/* =====================================================
+   RANK
+===================================================== */
+
+function getRank() {
+
+  if (
+    game.xp >= 20000
+  ) {
+    return "SS-Rank";
+  }
+
+  if (
+    game.xp >= 15000
+  ) {
+    return "S-Rank";
+  }
+
+  if (
+    game.xp >= 10000
+  ) {
+    return "A-Rank";
+  }
+
+  if (
+    game.xp >= 6000
+  ) {
+    return "B-Rank";
+  }
+
+  if (
+    game.xp >= 3000
+  ) {
+    return "C-Rank";
+  }
+
+  if (
+    game.xp >= 2000
+  ) {
+    return "D-Rank";
+  }
+
+  return "E-Rank";
+
+}
+
+
+/* =====================================================
+   PLAYER HP
+===================================================== */
+
+function getPlayerMaxHP() {
+
+  return (
+    100 +
+    game.vitality * 10
+  );
+
+}
+
+
+/* =====================================================
+   CRITICAL CHANCE
+===================================================== */
+
+function getCritChance() {
+
+  return Math.min(
+    50,
+    5 +
+    game.perception * 0.05
+  );
+
+}
+
+
+/* =====================================================
+   ATTACK DAMAGE
+===================================================== */
+
+function calculateAttackDamage() {
+
+  return Math.max(
+    20,
+    Math.floor(
+      20 +
+      game.strength * 2
+    )
+  );
+
+}
+
+
+/* =====================================================
+   MAIN UI
+===================================================== */
+
+function updateUI() {
+
+  document.getElementById(
+    "menuPlayerName"
+  ).innerText =
+    game.playerName;
+
+  document.getElementById(
+    "menuRank"
+  ).innerText =
+    getRank();
+
+  document.getElementById(
+    "menuLevel"
+  ).innerText =
+    getLevel();
+
+  document.getElementById(
+    "menuXP"
+  ).innerText =
+    game.xp.toLocaleString();
+
+  document.getElementById(
+    "mainXPFill"
+  ).style.width =
+    (
+      game.xp /
+      70000 *
+      100
+    ) + "%";
+
+  updateTrainingUI();
+
+  updateStudyUI();
+
+  updateStatsUI();
+
+  updateInventoryUI();
+
+  updateBossProgression();
+
+}
+
+
+/* =====================================================
+   TRAINING
+===================================================== */
+
+function addDailyPushup() {
+
+  if (
+    game.dailyCompleted
+  ) {
+    return;
+  }
+
+  if (
+    game.dailyPushups < 30
+  ) {
+
+    game.dailyPushups++;
+
+    saveGame();
+
+    updateTrainingUI();
+
+  }
+
+}
+
+
+function addDailySitup() {
+
+  if (
+    game.dailyCompleted
+  ) {
+    return;
+  }
+
+  if (
+    game.dailySitups < 30
+  ) {
+
+    game.dailySitups++;
+
+    saveGame();
+
+    updateTrainingUI();
+
+  }
+
+}
+
+
+function addDailySquat() {
+
+  if (
+    game.dailyCompleted
+  ) {
+    return;
+  }
+
+  if (
+    game.dailySquats < 40
+  ) {
+
+    game.dailySquats++;
+
+    saveGame();
+
+    updateTrainingUI();
+
+  }
+
+}
+
+
+function completeDailyExercise() {
+
+  if (
+    game.dailyCompleted
+  ) {
+
+    showSystemMessage(
+      "⚠️ Today's training is already complete.",
+      false
+    );
+
+    return;
+
+  }
+
+  if (
+    game.dailyPushups < 30 ||
+    game.dailySitups < 30 ||
+    game.dailySquats < 40
+  ) {
+
+    showSystemMessage(
+      "⚠️ Complete all exercises first.",
+      false
+    );
+
+    return;
+
+  }
+
+  game.dailyCompleted =
+    true;
+
+  /*
+    Balanced permanent upgrade.
+  */
+
+  game.strength += 5;
+
+  game.agility += 2;
+
+  game.vitality += 2;
+
+  gainXP(50);
+
+  saveGame();
+
+  updateUI();
+
+  showSystemMessage(
+
+    "✅ DAILY TRAINING COMPLETE!\n\n" +
+
+    "⭐ +50 XP\n" +
+
+    "💪 +5 Strength\n" +
+
+    "⚡ +2 Agility\n" +
+
+    "❤️ +2 Vitality",
+
+    false
+
+  );
+
+}
+
+
+function updateTrainingUI() {
+
+  if (
+    !document.getElementById(
+      "dailyPushups"
+    )
+  ) {
+    return;
+  }
+
+  document.getElementById(
+    "dailyPushups"
+  ).innerText =
+    game.dailyPushups;
+
+  document.getElementById(
+    "dailySitups"
+  ).innerText =
+    game.dailySitups;
+
+  document.getElementById(
+    "dailySquats"
+  ).innerText =
+    game.dailySquats;
+
+  document.getElementById(
+    "dailyCompleteButton"
+  ).disabled =
+    game.dailyCompleted;
+
+  document.getElementById(
+    "dailyStatus"
+  ).innerText =
+    game.dailyCompleted
+      ? "✅ DAILY QUEST COMPLETE. Come back tomorrow."
+      : "";
+
+}
+
+
+/* =====================================================
+   STUDY
+===================================================== */
+
+function completeStudyQuest() {
+
+  if (
+    game.studyCompleted
+  ) {
+
+    showSystemMessage(
+      "⚠️ Today's Study Quest is already complete.",
+      false
+    );
+
+    return;
+
+  }
+
+  game.studyCompleted =
+    true;
+
+  /*
+    Study improves Intelligence
+    and Perception.
+  */
+
+  game.intelligence += 3;
+
+  game.perception += 2;
+
+  gainXP(30);
+
+  saveGame();
+
+  updateUI();
+
+  showSystemMessage(
+
+    "📚 STUDY QUEST COMPLETE!\n\n" +
+
+    "⭐ +30 XP\n" +
+
+    "🧠 +3 Intelligence\n" +
+
+    "👁️ +2 Perception",
+
+    false
+
+  );
+
+}
+
+
+function updateStudyUI() {
+
+  if (
+    !document.getElementById(
+      "studyButton"
+    )
+  ) {
+    return;
+  }
+
+  document.getElementById(
+    "studyButton"
+  ).disabled =
+    game.studyCompleted;
+
+  document.getElementById(
+    "studyStatus"
+  ).innerText =
+    game.studyCompleted
+      ? "✅ STUDY QUEST COMPLETE. Come back tomorrow."
+      : "";
+
+}
+
+
+/* =====================================================
+   INVENTORY
+===================================================== */
+
+function openInventory() {
+
+  openScreen(
+    "inventoryScreen"
+  );
+
+  updateInventoryUI();
+
+}
+
+
+function updateInventoryUI() {
+
+  const list =
+    document.getElementById(
+      "inventoryList"
+    );
+
+  if (!list) {
+    return;
+  }
+
+  list.innerHTML = "";
+
+  if (
+    game.inventory.length === 0
+  ) {
+
+    list.innerHTML =
+      "<p>🎒 Inventory Empty</p>";
+
+    return;
+
+  }
+
+  game.inventory.forEach(
+    (item, index) => {
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+      card.className =
+        "itemCard";
+
+      card.innerHTML = `
+
+        <h3>${item.name}</h3>
+
+        <p>
+          ${item.description || ""}
+        </p>
+
+      `;
+
+      if (
+        item.type === "box"
+      ) {
+
+        const openButton =
+          document.createElement(
+            "button"
+          );
+
+        openButton.innerText =
+          "🎁 OPEN BOX";
+
+        openButton.onclick =
+          () => openLootBox(index);
+
+        card.appendChild(
+          openButton
+        );
+
+      }
+
+      list.appendChild(
+        card
+      );
+
+    }
+  );
+
+}
+
+
+function addInventoryItem(
+  name,
+  type = "item",
+  description = ""
+) {
+
+  game.inventory.push({
+
+    name:
+      name,
+
+    type:
+      type,
+
+    description:
+      description
+
+  });
+
+  saveGame();
+
+  updateInventoryUI();
+
+}
+
+
+/* =====================================================
+   STRENGTH BOX MILESTONES
+===================================================== */
+
+const strengthMilestones = [
+
+  {
+    strength: 50,
+    box: "📦 RANDOM LOOT BOX"
+  },
+
+  {
+    strength: 100,
+    box: "📦 RANDOM LOOT BOX"
+  },
+
+  {
+    strength: 200,
+    box: "☠️ CURSE LOOT BOX"
+  },
+
+  {
+    strength: 300,
+    box: "☠️ CURSE LOOT BOX"
+  },
+
+  {
+    strength: 500,
+    box: "✨ BLESSED BOX"
+  },
+
+  {
+    strength: 1000,
+    box: "✨ BLESSED BOX"
+  }
+
+];
+
+
+function checkStrengthLootMilestones() {
+
+  strengthMilestones.forEach(
+    milestone => {
+
+      if (
+        game.strength >=
+          milestone.strength &&
+
+        !game.strengthMilestones
+          .includes(
+            milestone.strength
+          )
+      ) {
+
+        game.strengthMilestones
+          .push(
+            milestone.strength
+          );
+
+        addInventoryItem(
+
+          milestone.box,
+
+          "box",
+
+          "Unlocked by reaching " +
+          milestone.strength +
+          " Strength."
+
+        );
+
+        saveGame();
+
+        showSystemMessage(
+
+          "🎁 STRENGTH MILESTONE!\n\n" +
+
+          "💪 Strength: " +
+          milestone.strength +
+
+          "\n\n" +
+
+          milestone.box +
+          " added to Inventory!",
+
+          false
+
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   LOOT BOX
+===================================================== */
+
+function openLootBox(index) {
+
+  const box =
+    game.inventory[index];
+
+  if (
+    !box ||
+    box.type !== "box"
+  ) {
+    return;
+  }
+
+  let reward;
+
+  if (
+    box.name.includes(
+      "RANDOM LOOT"
+    )
+  ) {
+
+    reward =
+      randomNormalLoot();
+
+  }
+
+  else if (
+    box.name.includes(
+      "CURSE"
+    )
+  ) {
+
+    reward =
+      randomCurseLoot();
+
+  }
+
+  else {
+
+    reward =
+      randomBlessedLoot();
+
+  }
+
+  game.inventory.splice(
+    index,
+    1
+  );
+
+  applyLootReward(
+    reward
+  );
+
+  saveGame();
+
+  updateUI();
+
+  showSystemMessage(
+
+    "🎁 BOX OPENED!\n\n" +
+
+    reward.text,
+
+    false
+
+  );
+
+}
+
+
+/* =====================================================
+   LOOT TABLES
+===================================================== */
+
+function randomNormalLoot() {
+
+  const rewards = [
+
+    {
+      text: "⭐ +100 XP",
+      xp: 100
+    },
+
+    {
+      text: "💪 +10 Strength",
+      strength: 10
+    },
+
+    {
+      text: "⚡ +10 Agility",
+      agility: 10
+    },
+
+    {
+      text: "🧠 +10 Intelligence",
+      intelligence: 10
+    },
+
+    {
+      text: "❤️ +10 Vitality",
+      vitality: 10
+    },
+
+    {
+      text: "👁️ +10 Perception",
+      perception: 10
+    }
+
+  ];
+
+  return rewards[
+    Math.floor(
+      Math.random() *
+      rewards.length
+    )
+  ];
+
+}
+
+
+function randomCurseLoot() {
+
+  const rewards = [
+
+    {
+      text:
+        "☠️ CURSED BLADE\n💪 +50 Strength",
+
+      strength: 50
+    },
+
+    {
+      text:
+        "☠️ DARK CORE\n🧠 +50 Intelligence",
+
+      intelligence: 50
+    },
+
+    {
+      text:
+        "☠️ CURSED ARMOR\n❤️ +50 Vitality",
+
+      vitality: 50
+    },
+
+    {
+      text:
+        "🌑 SHADOW ESSENCE\n⭐ +500 XP",
+
+      xp: 500
+    },
+
+    {
+      text:
+        "☠️ CURSED EYE\n👁️ +50 Perception\n⚡ +25 Agility",
+
+      perception: 50,
+      agility: 25
+    }
+
+  ];
+
+  return rewards[
+    Math.floor(
+      Math.random() *
+      rewards.length
+    )
+  ];
+
+}
+
+
+function randomBlessedLoot() {
+
+  const rewards = [
+
+    {
+      text:
+        "✨ BLESSED BLADE\n💪 +100 Strength",
+
+      strength: 100
+    },
+
+    {
+      text:
+        "✨ BLESSED ARMOR\n❤️ +100 Vitality",
+
+      vitality: 100
+    },
+
+    {
+      text:
+        "✨ CELESTIAL CORE\n🧠 +100 Intelligence",
+
+      intelligence: 100
+    },
+
+    {
+      text:
+        "✨ DIVINE SPEED\n⚡ +100 Agility",
+
+      agility: 100
+    },
+
+    {
+      text:
+        "✨ ALL-SEEING EYE\n👁️ +100 Perception",
+
+      perception: 100
+    }
+
+  ];
+
+  return rewards[
+    Math.floor(
+      Math.random() *
+      rewards.length
+    )
+  ];
+
+}
+
+
+/* =====================================================
+   APPLY LOOT
+===================================================== */
+
+function applyLootReward(
+  reward
+) {
+
+  if (reward.xp) {
+
+    game.xp +=
+      reward.xp;
+
+  }
+
+  if (reward.strength) {
+
+    game.strength +=
+      reward.strength;
+
+  }
+
+  if (reward.agility) {
+
+    game.agility +=
+      reward.agility;
+
+  }
+
+  if (reward.intelligence) {
+
+    game.intelligence +=
+      reward.intelligence;
+
+  }
+
+  if (reward.vitality) {
+
+    game.vitality +=
+      reward.vitality;
+
+  }
+
+  if (reward.perception) {
+
+    game.perception +=
+      reward.perception;
+
+  }
+
+  if (
+    game.xp > 70000
+  ) {
+
+    game.xp =
+      70000;
+
+  }
+
+  checkStrengthLootMilestones();
+
+  saveGame();
+
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+function openStats() {
+
+  openScreen(
+    "statsScreen"
+  );
+
+  updateStatsUI();
+
+}
+
+
+function updateStatsUI() {
+
+  if (
+    !document.getElementById(
+      "statsName"
+    )
+  ) {
+    return;
+  }
+
+  document.getElementById(
+    "statsName"
+  ).innerText =
+    game.playerName;
+
+  document.getElementById(
+    "statsRank"
+  ).innerText =
+    getRank();
+
+  document.getElementById(
+    "statsLevel"
+  ).innerText =
+    getLevel() +
+    " / 200";
+
+  document.getElementById(
+    "statsXP"
+  ).innerText =
+    game.xp.toLocaleString() +
+    " / 70,000";
+
+  document.getElementById(
+    "statsStrength"
+  ).innerText =
+    game.strength;
+
+  document.getElementById(
+    "statsAgility"
+  ).innerText =
+    game.agility;
+
+  document.getElementById(
+    "statsIntelligence"
+  ).innerText =
+    game.intelligence;
+
+  document.getElementById(
+    "statsVitality"
+  ).innerText =
+    game.vitality;
+
+  document.getElementById(
+    "statsPerception"
+  ).innerText =
+    game.perception;
+
+  document.getElementById(
+    "statsHP"
+  ).innerText =
+    getPlayerMaxHP();
+
+  document.getElementById(
+    "statsCrit"
+  ).innerText =
+    getCritChance().toFixed(1) +
+    "%";
+
+  document.getElementById(
+    "statsArmy"
+  ).innerText =
+    game.shadowArmy
+      .toLocaleString();
+
+  document.getElementById(
+    "statsTitle"
+  ).innerText =
+    game.title;
+
+}
+
+
+/* =====================================================
+   BOSS PROGRESSION
+===================================================== */
+
+function openBossProgression() {
+
+  openScreen(
+    "bossProgressionScreen"
+  );
+
+  updateBossProgression();
+
+}
+
+
+function updateBossProgression() {
+
+  const list =
+    document.getElementById(
+      "bossProgressionList"
+    );
+
+  if (!list) {
+    return;
+  }
+
+  list.innerHTML = "";
+
+  bosses.forEach(
+    boss => {
+
+      const defeated =
+        game.defeatedBosses
+          .includes(
+            boss.xp
+          );
+
+      let unlocked =
+        game.xp >= boss.xp;
+
+      /*
+        Hound requires Secret Quest.
+      */
+
+      if (
+        boss.secret
+      ) {
+
+        unlocked =
+          game.secretQuestCompleted;
+
+      }
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+      card.className =
+        "bossCard";
+
+      let status =
+        "🔒 LOCKED";
+
+      if (defeated) {
+
+        status =
+          "✅ DEFEATED";
+
+      }
+
+      else if (unlocked) {
+
+        status =
+          "⚔️ UNLOCKED";
+
+      }
+
+      card.innerHTML = `
+
+        <h3>
+          ${boss.name}
+        </h3>
+
+        <p>
+          ⭐ Required XP:
+          ${boss.xp.toLocaleString()}
+        </p>
+
+        <p>
+          ${status}
+        </p>
+
+      `;
+
+      list.appendChild(
+        card
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   SECRET QUEST
+===================================================== */
+
+function checkSecretQuest() {
+
+  if (
+    game.xp < 3000
+  ) {
+    return;
+  }
+
+  if (
+    game.secretQuestCompleted
+  ) {
+    return;
+  }
+
+  if (
+    game.secretQuestUnlocked
+  ) {
+    return;
+  }
+
+  game.secretQuestUnlocked =
+    true;
+
+  saveGame();
+
+  showSecretQuestPopup();
+
+}
+
+
+/* =====================================================
+   SECRET QUEST POPUP
+===================================================== */
+
+function showSecretQuestPopup() {
+
+  const text = `
+
+    <span class="secret">
+    🔒 SECRET QUEST DETECTED
+    </span>
+
+    <br><br>
+
+    👑 SHADOW AWAKENING
+
+    <br><br>
+
+    A hidden power has been discovered.
+
+    <br><br>
+
+    The System has detected a guardian
+    beyond the normal progression.
+
+    <br><br>
+
+    <strong>
+    OBJECTIVE
+    </strong>
+
+    <br>
+
+    Defeat the Lion King and claim
+    its reward.
+
+    <br><br>
+
+    Complete this quest to unlock
+    the Three-Headed Hound.
+
+  `;
+
+  showSystemMessage(
+    text,
+    true
+  );
+
+}
+
+
+/* =====================================================
+   ACCEPT SECRET QUEST
+===================================================== */
+
+function acceptSecretQuest() {
+
+  if (
+    !game.secretQuestUnlocked
+  ) {
+    return;
+  }
+
+  game.secretQuestAccepted =
+    true;
+
+  saveGame();
+
+  showSystemMessage(
+
+    "🔒 SECRET QUEST ACCEPTED!\n\n" +
+
+    "OBJECTIVE:\n\n" +
+
+    "🐺 Defeat the Lion King and claim its reward.\n\n" +
+
+    "The Three-Headed Hound remains locked until the objective is complete.",
+
+    false
+
+  );
+
+}
+
+
+/* =====================================================
+   CHECK SECRET QUEST COMPLETION
+===================================================== */
+
+function checkSecretQuestCompletion() {
+
+  if (
+    !game.secretQuestAccepted
+  ) {
+    return;
+  }
+
+  if (
+    game.defeatedBosses
+      .includes(2500)
+  ) {
+
+    if (
+      !game.secretQuestCompleted
+    ) {
+
+      game.secretQuestCompleted =
+        true;
+
+      saveGame();
+
+      showSystemMessage(
+
+        "⚔️ SECRET QUEST COMPLETE!\n\n" +
+
+        "🔓 THREE-HEADED HOUND UNLOCKED!\n\n" +
+
+        "The hidden guardian awaits.",
+
+        false
+
+      );
+
+    }
+
+  }
+
+}
+
+
+/* =====================================================
+   BOSS GATE
+===================================================== */
+
+function checkBossGate() {
+
+  if (
+    game.gameCompleted
+  ) {
+    return;
+  }
+
+  checkSecretQuestCompletion();
+
+  for (
+    const boss of bosses
+  ) {
+
+    if (
+      game.xp >= boss.xp &&
+      !game.defeatedBosses
+        .includes(
+          boss.xp
+        )
+    ) {
+
+      /*
+        The Hound is special.
+      */
+
+      if (
+        boss.secret &&
+        !game.secretQuestCompleted
+      ) {
+
+        continue;
+
+      }
+
+      openBoss(
+        boss
+      );
+
+      return;
+
+    }
+
+  }
+
+}
+
+
+/* =====================================================
    OPEN BOSS
-========================= */
+===================================================== */
 
-function openBossGate(boss) {
+function openBoss(
+  boss
+) {
 
-  currentBoss = boss;
+  /*
+    Don't open Hound unless quest
+    is completed.
+  */
 
-  bossHp = 100;
+  if (
+    boss.secret &&
+    !game.secretQuestCompleted
+  ) {
 
-  bossDefeated = false;
+    showSystemMessage(
 
-  document.getElementById("bossScreen")
-    .classList.remove("hidden");
+      "🔒 THE THREE-HEADED HOUND IS LOCKED.\n\n" +
 
-  document.getElementById("bossTitle").innerText =
-    "⚔️ " + boss.title + " ⚔️";
+      "Complete the Secret Quest first.",
 
-  document.getElementById("bossName").innerText =
+      false
+
+    );
+
+    return;
+
+  }
+
+  currentBoss =
+    boss;
+
+  bossHP =
+    boss.hp;
+
+  bossDefeated =
+    false;
+
+  shadowSummonsUsed =
+    0;
+
+  playerMaxHP =
+    getPlayerMaxHP();
+
+  playerHP =
+    playerMaxHP;
+
+
+  document
+    .getElementById(
+      "bossScreen"
+    )
+    .classList.add(
+      "active"
+    );
+
+
+  document.getElementById(
+    "bossTitle"
+  ).innerText =
+    "⚔️ " +
+    boss.title +
+    " ⚔️";
+
+
+  document.getElementById(
+    "bossName"
+  ).innerText =
     boss.name;
 
-  document.getElementById("bossDescription").innerText =
+
+  document.getElementById(
+    "bossDescription"
+  ).innerText =
     boss.description;
 
-  document.getElementById("bossHp").innerText =
-    bossHp;
 
-  document.getElementById("battleMessage").innerText =
-    "";
+  document.getElementById(
+    "bossHP"
+  ).innerText =
+    bossHP.toLocaleString();
 
-  document.getElementById("bossReward").classList.add(
+
+  document.getElementById(
+    "bossMaxHP"
+  ).innerText =
+    boss.hp.toLocaleString();
+
+
+  document.getElementById(
+    "playerHP"
+  ).innerText =
+    playerHP.toLocaleString();
+
+
+  document.getElementById(
+    "playerMaxHP"
+  ).innerText =
+    playerMaxHP.toLocaleString();
+
+
+  document.getElementById(
+    "battleStrength"
+  ).innerText =
+    game.strength;
+
+
+  document.getElementById(
+    "battleAgility"
+  ).innerText =
+    game.agility;
+
+
+  document.getElementById(
+    "battleIntelligence"
+  ).innerText =
+    game.intelligence;
+
+
+  document.getElementById(
+    "battlePerception"
+  ).innerText =
+    game.perception;
+
+
+  document.getElementById(
+    "battleDamage"
+  ).innerText =
+    calculateAttackDamage();
+
+
+  document.getElementById(
+    "battleMessage"
+  ).innerText =
+    "⚔️ The battle has begun.";
+
+
+  document.getElementById(
+    "bossReward"
+  ).classList.add(
     "hidden"
   );
 
-  document.getElementById("claimRewardButton")
-    .classList.add("hidden");
 
-  const image =
-    document.getElementById("bossImage");
-
-  /*
-    We only have your snake image currently.
-    It is shown for the first boss.
-  */
-
-  if (boss.xp === 2000) {
-
-    image.src = "snake.png";
-
-    image.classList.remove("hidden");
-
-  } else {
-
-    image.classList.add("hidden");
-  }
-
-}
-
-
-/* =========================
-   BOSS ATTACK
-========================= */
-
-function attackBoss() {
-
-  if (!currentBoss || bossDefeated) {
-    return;
-  }
-
-  bossHp -= 20;
-
-  if (bossHp < 0) {
-    bossHp = 0;
-  }
-
-  document.getElementById("bossHp").innerText =
-    bossHp;
-
-  if (bossHp > 0) {
-
-    document.getElementById("battleMessage").innerText =
-      "⚔️ Attack landed! Keep going.";
-
-    return;
-  }
-
-  defeatBoss();
-}
-
-
-/* =========================
-   DEFEAT BOSS
-========================= */
-
-function defeatBoss() {
-
-  bossDefeated = true;
-
-  defeatedBosses.push(currentBoss.xp);
-
-  document.getElementById("battleMessage").innerText =
-    "🏆 BOSS DEFEATED!";
-
-  const rewardBox =
-    document.getElementById("bossReward");
-
-  rewardBox.innerHTML = `
-    <h3>🎁 REWARD</h3>
-    <p>${currentBoss.reward}</p>
-    <p>💪 +${currentBoss.str} STR</p>
-    <p>⚡ +${currentBoss.agi} AGI</p>
-    <p>🧠 +${currentBoss.int} INT</p>
-    <p>⭐ +${currentBoss.rewardXP} XP</p>
-  `;
-
-  rewardBox.classList.remove("hidden");
-
-  document.getElementById("claimRewardButton")
-    .classList.remove("hidden");
-
-}
-
-
-/* =========================
-   CLAIM BOSS REWARD
-========================= */
-
-function claimBossReward() {
-
-  if (!currentBoss || !bossDefeated) {
-    return;
-  }
-
-  strength += currentBoss.str;
-
-  agility += currentBoss.agi;
-
-  intelligence += currentBoss.int;
-
-  /*
-    Special Three-Headed Hound reward
-  */
-
-  if (currentBoss.xp === 3000) {
-
-    shadowArmy = 10000;
-
-    playerTitle = "Shadow Monarch";
-
-    showSystemMessage(
-      "👑 SHADOW MONARCH AWAKENED!\n\n" +
-      "👥 10,000 Shadow Soldiers unlocked!"
-    );
-  }
-
-
-  addInventoryItem(
-    currentBoss.reward
+  document.getElementById(
+    "claimRewardButton"
+  ).classList.add(
+    "hidden"
   );
 
 
-  if (currentBoss.rewardXP > 0) {
+  document.getElementById(
+    "attackButton"
+  ).disabled =
+    false;
 
-    /*
-      Reward XP is added after the boss.
-      This does NOT create another boss loop
-      because this boss has already been defeated.
-    */
 
-    xp += currentBoss.rewardXP;
+  document.getElementById(
+    "leaveBossButton"
+  ).disabled =
+    false;
 
-    if (xp > 70000) {
-      xp = 70000;
-    }
+
+  const image =
+    document.getElementById(
+      "bossImage"
+    );
+
+
+  if (
+    boss.image
+  ) {
+
+    image.src =
+      boss.image;
+
+    image.classList.remove(
+      "hidden"
+    );
+
+  }
+
+  else {
+
+    image.classList.add(
+      "hidden"
+    );
+
   }
 
 
-  updateSystem();
+  updateBossHPUI();
+
+  updatePlayerHPUI();
+
+  updateSummonButton();
+
+}
+
+
+/* =====================================================
+   PLAYER ATTACK
+===================================================== */
+
+function calculateAttackDamage() {
+
+  const base =
+    20 +
+    game.strength * 2;
+
+  const defenseReduction =
+    currentBoss
+      ? currentBoss.defense * 0.25
+      : 0;
+
+  let damage =
+    Math.floor(
+      base -
+      defenseReduction
+    );
+
+  damage =
+    Math.max(
+      10,
+      damage
+    );
+
+  /*
+    Perception gives critical hits.
+  */
+
+  const critRoll =
+    Math.random() * 100;
+
+  if (
+    critRoll <
+    getCritChance()
+  ) {
+
+    damage =
+      Math.floor(
+        damage * 2
+      );
+
+    document.getElementById(
+      "battleMessage"
+    ).innerText =
+      "🎯 CRITICAL HIT!";
+
+  }
+
+  return damage;
+
+}
+
+
+/* =====================================================
+   ATTACK BOSS
+===================================================== */
+
+function attackBoss() {
+
+  if (
+    !currentBoss ||
+    bossDefeated
+  ) {
+    return;
+  }
+
+  const damage =
+    calculateAttackDamage();
+
+  bossHP -=
+    damage;
+
+  if (
+    bossHP < 0
+  ) {
+    bossHP = 0;
+  }
+
+  updateBossHPUI();
+
+  document.getElementById(
+    "battleDamage"
+  ).innerText =
+    damage;
+
+
+  if (
+    bossHP <= 0
+  ) {
+
+    defeatBoss();
+
+    return;
+
+  }
+
+
+  bossCounterAttack();
+
+}
+
+
+/* =====================================================
+   BOSS COUNTERATTACK
+===================================================== */
+
+function bossCounterAttack() {
+
+  if (!currentBoss) {
+    return;
+  }
+
+  /*
+    Agility gives the player
+    a chance to dodge.
+  */
+
+  const dodgeChance =
+    Math.min(
+      40,
+      game.agility * 0.05
+    );
+
+  const dodgeRoll =
+    Math.random() * 100;
+
+  if (
+    dodgeRoll <
+    dodgeChance
+  ) {
+
+    document.getElementById(
+      "battleMessage"
+    ).innerText =
+      "⚡ YOU DODGED THE BOSS ATTACK!";
+
+    return;
+
+  }
+
+
+  /*
+    Vitality reduces damage.
+  */
+
+  const reduction =
+    game.vitality * 0.05;
+
+  const damage =
+    Math.max(
+      1,
+      Math.floor(
+        currentBoss.bossDamage -
+        reduction
+      )
+    );
+
+  playerHP -=
+    damage;
+
+  if (
+    playerHP < 0
+  ) {
+
+    playerHP =
+      0;
+
+  }
+
+  updatePlayerHPUI();
+
+  document.getElementById(
+    "battleMessage"
+  ).innerText =
+    "👹 Boss counterattack: " +
+    damage +
+    " damage!";
+
+
+  if (
+    playerHP <= 0
+  ) {
+
+    playerDefeated();
+
+  }
+
+}
+
+
+/* =====================================================
+   PLAYER DEFEATED
+===================================================== */
+
+function playerDefeated() {
+
+  document.getElementById(
+    "attackButton"
+  ).disabled =
+    true;
+
+  document.getElementById(
+    "summonButton"
+  ).disabled =
+    true;
+
+  document.getElementById(
+    "battleMessage"
+  ).innerText =
+
+    "💀 PLAYER DEFEATED!\n\n" +
+
+    "The boss remains undefeated.\n\n" +
+
+    "Return stronger and try again.";
+
+}
+
+
+/* =====================================================
+   BOSS HP UI
+===================================================== */
+
+function updateBossHPUI() {
+
+  if (
+    !currentBoss
+  ) {
+    return;
+  }
+
+  document.getElementById(
+    "bossHP"
+  ).innerText =
+    bossHP.toLocaleString();
+
+  const percent =
+    Math.max(
+      0,
+      bossHP /
+      currentBoss.hp *
+      100
+    );
+
+  document.getElementById(
+    "bossHpFill"
+  ).style.width =
+    percent + "%";
+
+}
+
+
+/* =====================================================
+   PLAYER HP UI
+===================================================== */
+
+function updatePlayerHPUI() {
+
+  document.getElementById(
+    "playerHP"
+  ).innerText =
+    playerHP.toLocaleString();
+
+  document.getElementById(
+    "playerMaxHP"
+  ).innerText =
+    playerMaxHP.toLocaleString();
+
+  const percent =
+    Math.max(
+      0,
+      playerHP /
+      playerMaxHP *
+      100
+    );
+
+  document.getElementById(
+    "playerHpFill"
+  ).style.width =
+    percent + "%";
+
+}
+
+
+/* =====================================================
+   SHADOW SUMMONING
+===================================================== */
+
+function updateSummonButton() {
+
+  const button =
+    document.getElementById(
+      "summonButton"
+    );
+
+  if (
+    game.shadowArmy <= 0 ||
+    game.title !==
+      "Shadow Monarch"
+  ) {
+
+    button.disabled =
+      true;
+
+    button.innerText =
+      "🔒 SUMMON SHADOWS";
+
+    return;
+
+  }
+
+
+  if (
+    shadowSummonsUsed >= 3
+  ) {
+
+    button.disabled =
+      true;
+
+    button.innerText =
+      "⏳ SUMMON LIMIT REACHED";
+
+    return;
+
+  }
+
+
+  button.disabled =
+    false;
+
+  button.innerText =
+    "👥 SUMMON SHADOWS";
+
+}
+
+
+/* =====================================================
+   SUMMON SHADOWS
+===================================================== */
+
+function summonShadows() {
+
+  if (
+    !currentBoss
+  ) {
+    return;
+  }
+
+  if (
+    game.shadowArmy <= 0
+  ) {
+    return;
+  }
+
+  if (
+    game.title !==
+      "Shadow Monarch"
+  ) {
+    return;
+  }
+
+  if (
+    shadowSummonsUsed >= 3
+  ) {
+    return;
+  }
+
+
+  /*
+    Only a portion of the army
+    participates in each summon.
+  */
+
+  const summoned =
+    Math.min(
+      100,
+      game.shadowArmy
+    );
+
+
+  /*
+    Intelligence makes the
+    Shadow Army stronger.
+  */
+
+  const damage =
+    Math.max(
+      100,
+
+      Math.floor(
+
+        summoned * 0.5 +
+
+        game.intelligence * 1.5
+
+      )
+    );
+
+
+  bossHP -=
+    damage;
+
+
+  if (
+    bossHP < 0
+  ) {
+
+    bossHP = 0;
+
+  }
+
+
+  shadowSummonsUsed++;
+
+
+  updateBossHPUI();
+
+  updateSummonButton();
+
+
+  document.getElementById(
+    "battleMessage"
+  ).innerText =
+
+    "👥 " +
+    summoned +
+    " Shadow Soldiers attacked!\n\n" +
+
+    "🌑 Shadow Damage: " +
+    damage;
+
+
+  if (
+    bossHP <= 0
+  ) {
+
+    defeatBoss();
+
+  }
+
+}
+
+
+/* =====================================================
+   DEFEAT BOSS
+===================================================== */
+
+function defeatBoss() {
+
+  bossDefeated =
+    true;
+
+  document.getElementById(
+    "attackButton"
+  ).disabled =
+    true;
+
+  document.getElementById(
+    "summonButton"
+  ).disabled =
+    true;
+
+  document.getElementById(
+    "leaveBossButton"
+  ).disabled =
+    true;
+
+
+  document.getElementById(
+    "battleMessage"
+  ).innerText =
+    "🏆 BOSS DEFEATED!";
+
+
+  const reward =
+    document.getElementById(
+      "bossReward"
+    );
+
+
+  reward.innerHTML = `
+
+    <h3>
+      🎁 BOSS REWARD
+    </h3>
+
+    <p>
+      ${currentBoss.reward}
+    </p>
+
+    <p>
+      💪 +${currentBoss.str}
+      Strength
+    </p>
+
+    <p>
+      ⚡ +${currentBoss.agi}
+      Agility
+    </p>
+
+    <p>
+      🧠 +${currentBoss.int}
+      Intelligence
+    </p>
+
+    <p>
+      ❤️ +${currentBoss.vit}
+      Vitality
+    </p>
+
+    <p>
+      👁️ +${currentBoss.per}
+      Perception
+    </p>
+
+    <p>
+      ⭐ +${currentBoss.rewardXP}
+      XP
+    </p>
+
+  `;
+
+
+  reward.classList.remove(
+    "hidden"
+  );
+
+
+  document.getElementById(
+    "claimRewardButton"
+  ).classList.remove(
+    "hidden"
+  );
+
+}
+
+
+/* =====================================================
+   CLAIM BOSS REWARD
+===================================================== */
+
+function claimBossReward() {
+
+  if (
+    !currentBoss ||
+    !bossDefeated
+  ) {
+    return;
+  }
+
+
+  /*
+    Prevent duplicate rewards.
+  */
+
+  if (
+    game.defeatedBosses
+      .includes(
+        currentBoss.xp
+      )
+  ) {
+
+    return;
+
+  }
+
+
+  /*
+    Mark defeated permanently.
+  */
+
+  game.defeatedBosses.push(
+    currentBoss.xp
+  );
+
+
+  /*
+    Upgrade ALL stats.
+  */
+
+  game.strength +=
+    currentBoss.str;
+
+  game.agility +=
+    currentBoss.agi;
+
+  game.intelligence +=
+    currentBoss.int;
+
+  game.vitality +=
+    currentBoss.vit;
+
+  game.perception +=
+    currentBoss.per;
+
+
+  /*
+    Permanent inventory reward.
+  */
+
+  addInventoryItem(
+
+    currentBoss.reward,
+
+    "item",
+
+    "Permanent boss reward."
+
+  );
+
+
+  /*
+    Secret Quest completion.
+  */
+
+  if (
+    currentBoss.xp ===
+      2500
+  ) {
+
+    if (
+      game.secretQuestAccepted
+    ) {
+
+      game.secretQuestCompleted =
+        true;
+
+    }
+
+  }
+
+
+  /*
+    THREE-HEADED HOUND
+  */
+
+  if (
+    currentBoss.xp ===
+      3000
+  ) {
+
+    game.shadowArmy =
+      10000;
+
+    game.title =
+      "Shadow Monarch";
+
+
+    saveGame();
+
+
+    document
+      .getElementById(
+        "bossScreen"
+      )
+      .classList.remove(
+        "active"
+      );
+
+
+    currentBoss =
+      null;
+
+
+    updateUI();
+
+
+    showSystemMessage(
+
+      "👑 SHADOW MONARCH AWAKENED!\n\n" +
+
+      "👥 10,000 SHADOW SOLDIERS UNLOCKED!\n\n" +
+
+      "🌑 THE TRUE SYSTEM HAS BEGUN.\n\n" +
+
+      "👥 Shadow Summoning is now available.",
+
+      false
+
+    );
+
+    return;
+
+  }
 
 
   /*
     FINAL BOSS
   */
 
-  if (currentBoss.finalBoss) {
+  if (
+    currentBoss.finalBoss
+  ) {
 
-    gameCompleted = true;
+    game.gameCompleted =
+      true;
 
-    document.getElementById("bossScreen")
-      .classList.add("hidden");
+    saveGame();
 
-    showFinalCompletion();
+    showFinalScreen();
 
     return;
+
   }
 
-
-  document.getElementById("bossScreen")
-    .classList.add("hidden");
-
-  currentBoss = null;
 
   /*
-    Check whether the reward XP unlocked
-    another boss.
+    Boss XP reward.
   */
 
-  setTimeout(() => {
+  if (
+    currentBoss.rewardXP > 0
+  ) {
 
-    checkBossGates();
+    game.xp +=
+      currentBoss.rewardXP;
 
-  }, 300);
-
-}
-
-
-/* =========================
-   INVENTORY
-========================= */
-
-function addInventoryItem(item) {
-
-  const inventory =
-    document.getElementById("inventory");
-
-  const empty =
-    document.getElementById("emptyInventory");
-
-  if (empty) {
-    empty.remove();
   }
 
-  const itemBox =
-    document.createElement("div");
 
-  itemBox.style.margin = "10px auto";
-  itemBox.style.padding = "15px";
-  itemBox.style.maxWidth = "280px";
-  itemBox.style.background = "#101020";
-  itemBox.style.border = "2px solid #00aaff";
-  itemBox.style.borderRadius = "10px";
-  itemBox.style.boxShadow =
-    "0 0 15px #00aaff";
+  if (
+    game.xp > 70000
+  ) {
 
-  itemBox.innerHTML =
-    "🎁 <strong>" + item + "</strong>";
+    game.xp =
+      70000;
 
-  inventory.appendChild(itemBox);
+  }
+
+
+  saveGame();
+
+  checkStrengthLootMilestones();
+
+  checkSecretQuestCompletion();
+
+
+  document
+    .getElementById(
+      "bossScreen"
+    )
+    .classList.remove(
+      "active"
+    );
+
+
+  currentBoss =
+    null;
+
+
+  updateUI();
+
+
+  setTimeout(
+    () => {
+
+      checkBossGate();
+
+    },
+
+    500
+
+  );
+
 }
 
 
-/* =========================
+/* =====================================================
    LEAVE BOSS
-========================= */
+===================================================== */
 
 function leaveBoss() {
 
-  if (bossDefeated) {
+  if (
+    bossDefeated
+  ) {
     return;
   }
 
-  document.getElementById("bossScreen")
-    .classList.add("hidden");
+  document
+    .getElementById(
+      "bossScreen"
+    )
+    .classList.remove(
+      "active"
+    );
 
-  currentBoss = null;
+  currentBoss =
+    null;
+
 }
 
 
-/* =========================
+/* =====================================================
    SYSTEM MESSAGE
-========================= */
+===================================================== */
 
-function showSystemMessage(message) {
+function showSystemMessage(
+  message,
+  secret = false
+) {
 
-  document.getElementById(
-    "systemMessageText"
-  ).innerText = message;
+  const text =
+    document.getElementById(
+      "systemMessageText"
+    );
 
-  document.getElementById(
-    "systemMessage"
-  ).classList.remove("hidden");
+  text.innerHTML =
+    message
+      .replace(
+        /\n/g,
+        "<br>"
+      );
+
+
+  const buttons =
+    document.getElementById(
+      "systemButtons"
+    );
+
+
+  if (
+    secret &&
+    game.secretQuestUnlocked &&
+    !game.secretQuestAccepted
+  ) {
+
+    buttons.innerHTML = `
+
+      <button
+        onclick="acceptSecretQuest()">
+
+        🔒 ACCEPT SECRET QUEST
+
+      </button>
+
+      <br>
+
+      <button
+        onclick="closeSystemMessage()">
+
+        LATER
+
+      </button>
+
+    `;
+
+  }
+
+  else {
+
+    buttons.innerHTML = `
+
+      <button
+        onclick="closeSystemMessage()">
+
+        CONTINUE
+
+      </button>
+
+    `;
+
+  }
+
+
+  document
+    .getElementById(
+      "systemMessage"
+    )
+    .classList.remove(
+      "hidden"
+    );
+
 }
 
+
+/* =====================================================
+   CLOSE SYSTEM MESSAGE
+===================================================== */
 
 function closeSystemMessage() {
 
-  document.getElementById(
-    "systemMessage"
-  ).classList.add("hidden");
+  document
+    .getElementById(
+      "systemMessage"
+    )
+    .classList.add(
+      "hidden"
+    );
+
 }
 
 
-/* =========================
-   FINAL COMPLETION
-========================= */
+/* =====================================================
+   FINAL SCREEN
+===================================================== */
 
-function showFinalCompletion() {
+function showFinalScreen() {
 
   document.body.innerHTML = `
 
-    <div style="
-      min-height:100vh;
-      background:#050008;
-      color:white;
-      text-align:center;
-      padding:80px 20px;
-      box-sizing:border-box;
-    ">
+    <div
+      style="
+        min-height:100vh;
+        padding:80px 20px;
+        background:#050008;
+        color:white;
+        text-align:center;
+      "
+    >
 
-      <h1 style="
-        color:#00eaff;
-        font-size:32px;
-      ">
+      <h1 class="final">
         👑 SILENT SYSTEM COMPLETE 👑
       </h1>
 
@@ -1110,7 +3827,8 @@ function showFinalCompletion() {
       </h2>
 
       <p>
-        The Eternal Shadow Overlord has been defeated.
+        The Eternal Shadow Overlord
+        has been defeated.
       </p>
 
       <h2>
@@ -1118,19 +3836,23 @@ function showFinalCompletion() {
       </h2>
 
       <p>
-        ⭐ XP: 70,000 / 70,000
+        ⭐ XP:
+        70,000 / 70,000
       </p>
 
       <p>
-        📈 LEVEL: 200 / 200
+        📈 LEVEL:
+        200 / 200
       </p>
 
       <p>
-        🏆 RANK: SS-Rank
+        🏆 RANK:
+        SS-Rank
       </p>
 
       <p>
-        👥 SHADOW ARMY: 10,000
+        👥 SHADOW ARMY:
+        ${game.shadowArmy.toLocaleString()}
       </p>
 
       <h2>
@@ -1138,7 +3860,8 @@ function showFinalCompletion() {
       </h2>
 
       <p>
-        Your Silent System journey has reached its final trial.
+        The Silent System journey
+        has reached its final trial.
       </p>
 
     </div>
@@ -1148,13 +3871,105 @@ function showFinalCompletion() {
 }
 
 
-/* =========================
-   START
-========================= */
+/* =====================================================
+   START GAME
+===================================================== */
 
-updateSystem();
+loadGame();
+
+checkDailyReset();
+
+
+if (
+  game.playerName === ""
+) {
+
+  document
+    .getElementById(
+      "nameSetup"
+    )
+    .classList.remove(
+      "hidden"
+    );
+
+  document
+    .getElementById(
+      "mainMenu"
+    )
+    .classList.add(
+      "hidden"
+    );
+
+}
+
+else {
+
+  document
+    .getElementById(
+      "nameSetup"
+    )
+    .classList.add(
+      "hidden"
+    );
+
+  document
+    .getElementById(
+      "mainMenu"
+    )
+    .classList.remove(
+      "hidden"
+    );
+
+}
+
+
+updateUI();
+
+
+/*
+  Check whether the player already
+  reached the Secret Quest point
+  before the page was reopened.
+*/
+
+if (
+  game.xp >= 3000 &&
+  !game.secretQuestUnlocked &&
+  !game.secretQuestCompleted
+) {
+
+  setTimeout(
+    () => {
+
+      checkSecretQuest();
+
+    },
+
+    500
+
+  );
+
+}
+
+
+/*
+  Check for any unlocked boss
+  after loading the save.
+*/
+
+setTimeout(
+  () => {
+
+    checkBossGate();
+
+  },
+
+  800
+
+);
 
 </script>
 
 </body>
-      </html>
+
+  </html>
