@@ -777,7 +777,7 @@ let game = {
   playerName: "",
 
   xp: 0,
-
+lastLevelShown: 1,
   strength: 10,
 
   agility: 10,
@@ -1374,7 +1374,41 @@ function getLevel() {
   return level;
 
 }
+/* =====================================================
+   LEVEL UP SYSTEM
+===================================================== */
 
+function checkLevelUp() {
+
+  const currentLevel = getLevel();
+
+  if (currentLevel > game.lastLevelShown) {
+
+    game.lastLevelShown = currentLevel;
+
+    saveGame();
+
+    showSystemMessage(
+
+      "⚔️ LEVEL UP! ⚔️\n\n" +
+
+      "📈 LEVEL " +
+      currentLevel +
+      " ACHIEVED!\n\n" +
+
+      "The System recognizes your growth.\n\n" +
+
+      "💪 Your power has increased.\n" +
+
+      "⚔️ Continue your journey.",
+
+      false
+
+    );
+
+  }
+
+      }
 
 /* =====================================================
    RANK
@@ -1638,7 +1672,7 @@ function completeDailyExercise() {
   saveGame();
 
   updateUI();
-
+checkLevelUp();
   showSystemMessage(
 
     "✅ DAILY TRAINING COMPLETE!\n\n" +
