@@ -1298,21 +1298,21 @@ function openScreen(id) {
 
 function goHome() {
 
+  // Hide all screens
   document
-    .querySelectorAll(
-      ".screen"
-    )
+    .querySelectorAll(".screen")
     .forEach(screen => {
-
-      screen.classList.remove(
-        "active"
-      );
-
+      screen.classList.remove("active");
     });
+
+  // Show main menu
+  document
+    .getElementById("mainMenu")
+    .classList.remove("hidden");
 
   updateUI();
 
-}
+      }
 
 
 /* =====================================================
