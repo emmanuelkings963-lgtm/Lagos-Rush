@@ -1,4 +1,4 @@
-here<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -73,7 +73,7 @@ input {
 }
 
 .screen {
-  display: none;
+  helay: none;
 }
 
 .screen.active {
@@ -298,7 +298,7 @@ input {
   <p>
     ⭐
     <span id="menuXP">0</span>
-    / 70,000 XP
+    / XP
   </p>
 
   <div class="xp-bar">
@@ -1524,10 +1524,20 @@ function updateUI() {
   ).innerText =
     getLevel();
 
-  document.getElementById(
-    "menuXP"
-  ).innerText =
-    game.xp.toLocaleString();
+  const level = getLevel();
+
+const xpStart =
+  (level - 1) * 200;
+
+const xpEnd =
+  level * 200;
+
+document.getElementById(
+  "menuXP"
+).innerText =
+  game.xp.toLocaleString() +
+  " / " +
+  xpEnd.toLocaleString();
 
   document.getElementById(
     "mainXPFill"
