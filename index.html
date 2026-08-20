@@ -1525,11 +1525,19 @@ function updateUI() {
 
   const level = getLevel();
 
-const xpStart =
-  (level - 1) * 200;
+const levelXP = level * 200;
 
-const xpEnd =
-  level * 200;
+document.getElementById(
+  "menuLevel"
+).innerText =
+  level + " / " + levelXP;
+
+document.getElementById(
+  "menuXP"
+).innerText =
+  game.xp.toLocaleString() +
+  " / " +
+  levelXP.toLocaleString();
 
 document.getElementById(
   "menuXP"
