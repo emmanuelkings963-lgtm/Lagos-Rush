@@ -1508,64 +1508,49 @@ function calculateAttackDamage() {
 
 function updateUI() {
 
-  document.getElementById(
-    "menuPlayerName"
-  ).innerText =
+  document.getElementById("menuPlayerName").innerText =
     game.playerName;
 
-  document.getElementById(
-    "menuRank"
-  ).innerText =
+  document.getElementById("menuRank").innerText =
     getRank();
-
-  document.getElementById(
-    "menuLevel"
-  ).innerText =
-    getLevel();
 
   const level = getLevel();
 
-const levelXP = level * 200;
+  // Level only
+  document.getElementById("menuLevel").innerText =
+    level;
 
-document.getElementById(
-  "menuLevel"
-).innerText =
-  level + " / " + levelXP;
+  // XP needed for the next level
+  const nextLevelXP = level * 200;
 
-document.getElementById(
-  "menuXP"
-).innerText =
-  game.xp.toLocaleString() +
-  " / " +
-  levelXP.toLocaleString();
+  document.getElementById("menuXP").innerText =
+    game.xp.toLocaleString() +
+    " / " +
+    nextLevelXP.toLocaleString();
 
-document.getElementById(
-  "menuXP"
-).innerText =
-  game.xp.toLocaleString() +
-  " / " +
-  xpEnd.toLocaleString();
+  // XP bar
+  const previousLevelXP = (level - 1) * 200;
 
-  document.getElementById(
-    "mainXPFill"
-  ).style.width =
-    (
-      game.xp /
-      70000 *
-      100
-    ) + "%";
+  const progress =
+    level >= 200
+      ? 100
+      : Math.max(
+          0,
+          Math.min(
+            100,
+            ((game.xp - previousLevelXP) / 200) * 100
+          )
+        );
+
+  document.getElementById("mainXPFill").style.width =
+    progress + "%";
 
   updateTrainingUI();
-
   updateStudyUI();
-
   updateStatsUI();
-
   updateInventoryUI();
-
   updateBossProgression();
-
-}
+      }
 
 
 /* =====================================================
