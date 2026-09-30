@@ -2846,7 +2846,15 @@ function openBoss(
 
   currentBoss =
     boss;
+if (boss.xp === 3000) {
+  const music = document.getElementById("darkAriaMusic");
 
+  if (music) {
+    music.currentTime = 0;
+    music.volume = 0.7;
+    music.play().catch(() => {});
+  }
+      }
   bossHP =
     boss.hp;
 
