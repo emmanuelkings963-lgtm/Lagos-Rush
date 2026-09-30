@@ -779,6 +779,7 @@ let game = {
   playerName: "",
 
   xp: 0,
+ houndUpgradeActivated: false,    
 lastLevelShown: 1,
   strength: 10,
 
@@ -2863,7 +2864,7 @@ if (boss.xp === 3000) {
 
   shadowSummonsUsed =
     0;
-
+game.houndUpgradeActivated = false;
   playerMaxHP =
     getPlayerMaxHP();
 
@@ -3028,10 +3029,10 @@ if (boss.xp === 3000) {
 ===================================================== */
 
 function calculateAttackDamage() {
-
-  const base =
-    20 +
-    game.strength * 2;
+const base =
+  game.houndUpgradeActivated
+    ? 100 + game.strength * 3
+    : 20 + game.strength * 2;
 
   const defenseReduction =
     currentBoss
@@ -3196,7 +3197,14 @@ function bossCounterAttack() {
   }
 
   updatePlayerHPUI();
-
+if (
+  currentBoss &&
+  currentBoss.xp === 3000 &&
+  playerHP > 0 &&
+  playerHP <= playerMaxHP * 0.2
+) {
+  triggerHoundUpgrade();
+      }
   document.getElementById(
     "battleMessage"
   ).innerText =
@@ -3804,7 +3812,14 @@ function leaveBoss() {
   ) {
     return;
   }
+if (currentBoss && currentBoss.xp === 3000) {
+  const music = document.getElementById("darkAriaMusic");
 
+  if (music) {
+    music.pause();
+    music.currentTime = 0;
+  }
+      }
   document
     .getElementById(
       "bossScreen"
@@ -4086,7 +4101,63 @@ setTimeout(
   800
 
 );
+function triggerHoundUpgrade() {
 
+  if (game.houndUpgradeActivated) {
+    return;
+  }
+
+  game.houndUpgradeActivated = true;
+
+// Emergency power boost
+game.strength += 100;
+game.agility += 50;
+game.vitality += 100;
+game.perception += 50;
+document.getElementById("bossTitle").innerText =
+  "🌑 SHADOW CORE OVERDRIVE 🌑";
+
+document.getElementById("bossTitle").style.color =
+  "#aa00ff";
+playerMaxHP = getPlayerMaxHP();
+playerHP = playerMaxHP;
+
+saveGame();
+
+updateUI();
+updateBossHPUI();
+updatePlayerHPUI();
+document.getElementById("battleMessage").innerText =
+  "🌑 SHADOW CORE OVERDRIVE ACTIVATED!\n\n" +
+  "⚔️ NEW ATTACK POWER UNLOCKED!";
+setTimeout(() => {
+
+  showSystemMessage(
+
+    "⚠️ CRITICAL CONDITION DETECTED ⚠️\n\n" +
+
+    "❤️ PLAYER HP: " +
+    playerHP +
+    " / " +
+    playerMaxHP +
+    "\n\n" +
+
+    "The System has detected that the Player is approaching defeat.\n\n" +
+
+    "⚡ EMERGENCY EVOLUTION PROTOCOL\n" +
+    "INITIALIZING...\n\n" +
+
+    "⚔️ NEW POWER DETECTED\n" +
+    "🌑 SHADOW CORE OVERDRIVE\n\n" +
+
+    "SYSTEM: PLAYER REFUSES TO FALL.",
+
+    false
+
+  );
+  }, 1500);
+
+      }
 </script>
 
 </body>
