@@ -745,7 +745,31 @@ input {
   </div>
 
 </div>
+</div>
 
+<div id="specialQuestScreen" class="screen hidden">
+
+  <h2>⚔️ SPECIAL QUEST ⚔️</h2>
+
+  <h3>ENDURANCE TRIAL</h3>
+
+  <p>Complete the following:</p>
+
+  <p>💪 Push-ups: <span id="pushupProgress">0 / 100</span></p>
+  <p>🔥 Sit-ups: <span id="situpProgress">0 / 100</span></p>
+  <p>🦵 Squats: <span id="squatProgress">0 / 100</span></p>
+
+  <h3>REWARD: +300 XP</h3>
+
+  <button onclick="completeSpecialQuest()">
+    COMPLETE QUEST
+  </button>
+
+  <button onclick="showScreen('mainMenu')">
+    BACK
+  </button>
+
+</div>
 
 <script>
 
