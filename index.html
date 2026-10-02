@@ -244,7 +244,9 @@ input {
 <audio id="systemMusic" loop>
   <source src="song.mp3" type="audio/mpeg">
 </audio>
-
+<audio id="lionKingMusic" loop>
+  <source src="shadowborn.mp3" type="audio/mpeg">
+</audio>
 <!-- =====================================================
      NAME SETUP
 ===================================================== -->
@@ -939,11 +941,11 @@ const bosses = [
 
     image: "lionking.png",
 
-    hp: 1000,
+    hp: 3000,
 
-    defense: 25,
+    defense: 50,
 
-    bossDamage: 25,
+    bossDamage: 45,
 
     reward: "🦁 LION CLAW",
 
@@ -2820,7 +2822,15 @@ function checkBossGate() {
 function openBoss(
   boss
 ) {
+if (boss.xp === 2500) {
+  const music = document.getElementById("lionKingMusic");
 
+  if (music) {
+    music.currentTime = 0;
+    music.volume = 0.7;
+    music.play().catch(() => {});
+  }
+}
   /*
     Don't open Hound unless quest
     is completed.
