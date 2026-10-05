@@ -1281,7 +1281,12 @@ function loadGame() {
       ...game,
       ...data
     };
-
+if (game.defeatedBosses.includes(2500)) {
+  game.secretQuestUnlocked = true;
+  game.secretQuestAccepted = true;
+  game.secretQuestCompleted = true;
+  saveGame();
+      }
   } catch(error) {
 
     console.log(
@@ -2194,7 +2199,9 @@ function openLootBox(index) {
   saveGame();
 
   updateUI();
-
+setTimeout(() => {
+  checkBossGate();
+}, 500);
   showSystemMessage(
 
     "🎁 BOX OPENED!\n\n" +
@@ -3616,7 +3623,25 @@ function defeatBoss() {
 ===================================================== */
 
 function claimBossReward() {
+  // Stop Lion King music when the fight is completed
+  if (currentBoss && currentBoss.xp === 2500) {
+    const music = document.getElementById("lionKingMusic");
 
+    if (music) {
+      music.pause();
+      music.currentTime = 0;
+    }
+      }
+
+  saveGame();
+
+  showSystemMessage(
+    "⚔️ SECRET QUEST COMPLETE!\n\n" +
+    "🔓 THREE-HEADED HOUND UNLOCKED!\n\n" +
+    "🐺 The hidden guardian awaits.",
+    false
+  );
+      }
   if (
     !currentBoss ||
     !bossDefeated
@@ -3689,21 +3714,21 @@ function claimBossReward() {
     Secret Quest completion.
   */
 
-  if (
-    currentBoss.xp ===
-      2500
-  ) {
+  if (currentBoss.xp === 2500) {
 
-    if (
-      game.secretQuestAccepted
-    ) {
+  game.secretQuestUnlocked = true;
+  game.secretQuestAccepted = true;
+  game.secretQuestCompleted = true;
 
-      game.secretQuestCompleted =
-        true;
+  saveGame();
 
-    }
-
-  }
+  showSystemMessage(
+    "⚔️ SECRET QUEST COMPLETE!\n\n" +
+    "🔓 THREE-HEADED HOUND UNLOCKED!\n\n" +
+    "🐺 The hidden guardian awaits.",
+    false
+  );
+      }
 
 
   /*
@@ -3854,6 +3879,14 @@ function leaveBoss() {
   }
 if (currentBoss && currentBoss.xp === 3000) {
   const music = document.getElementById("darkAriaMusic");
+
+  if (music) {
+    music.pause();
+    music.currentTime = 0;
+  }
+      }
+      if (currentBoss && currentBoss.xp === 2500) {
+  const music = document.getElementById("lionKingMusic");
 
   if (music) {
     music.pause();
