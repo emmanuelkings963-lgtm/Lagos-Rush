@@ -3618,253 +3618,127 @@ function defeatBoss() {
 }
 
 
+
+
 /* =====================================================
    CLAIM BOSS REWARD
 ===================================================== */
 
 function claimBossReward() {
-  // Stop Lion King music when the fight is completed
-  if (currentBoss && currentBoss.xp === 2500) {
+
+  if (!currentBoss || !bossDefeated) {
+    return;
+  }
+
+  // Stop Lion King music after victory.
+  if (currentBoss.xp === 2500) {
     const music = document.getElementById("lionKingMusic");
 
     if (music) {
       music.pause();
       music.currentTime = 0;
     }
-      }
+  }
 
-  saveGame();
-
-  showSystemMessage(
-    "⚔️ SECRET QUEST COMPLETE!\n\n" +
-    "🔓 THREE-HEADED HOUND UNLOCKED!\n\n" +
-    "🐺 The hidden guardian awaits.",
-    false
-  );
-      }
-  if (
-    !currentBoss ||
-    !bossDefeated
-  ) {
+  // Prevent duplicate rewards.
+  if (game.defeatedBosses.includes(currentBoss.xp)) {
     return;
   }
 
+  // Save the defeated boss.
+  game.defeatedBosses.push(currentBoss.xp);
 
-  /*
-    Prevent duplicate rewards.
-  */
+  // Upgrade player stats.
+  game.strength += currentBoss.str;
+  game.agility += currentBoss.agi;
+  game.intelligence += currentBoss.int;
+  game.vitality += currentBoss.vit;
+  game.perception += currentBoss.per;
 
-  if (
-    game.defeatedBosses
-      .includes(
-        currentBoss.xp
-      )
-  ) {
-
-    return;
-
-  }
-
-
-  /*
-    Mark defeated permanently.
-  */
-
-  game.defeatedBosses.push(
-    currentBoss.xp
-  );
-
-
-  /*
-    Upgrade ALL stats.
-  */
-
-  game.strength +=
-    currentBoss.str;
-
-  game.agility +=
-    currentBoss.agi;
-
-  game.intelligence +=
-    currentBoss.int;
-
-  game.vitality +=
-    currentBoss.vit;
-
-  game.perception +=
-    currentBoss.per;
-
-
-  /*
-    Permanent inventory reward.
-  */
-
+  // Give the permanent boss reward.
   addInventoryItem(
-
     currentBoss.reward,
-
     "item",
-
     "Permanent boss reward."
-
   );
 
-
-  /*
-    Secret Quest completion.
-  */
-
+  // Lion King unlocks the Three-Headed Hound.
   if (currentBoss.xp === 2500) {
 
-  game.secretQuestUnlocked = true;
-  game.secretQuestAccepted = true;
-  game.secretQuestCompleted = true;
-
-  saveGame();
-
-  showSystemMessage(
-    "⚔️ SECRET QUEST COMPLETE!\n\n" +
-    "🔓 THREE-HEADED HOUND UNLOCKED!\n\n" +
-    "🐺 The hidden guardian awaits.",
-    false
-  );
-      }
-
-
-  /*
-    THREE-HEADED HOUND
-  */
-
-  if (
-    currentBoss.xp ===
-      3000
-  ) {
-
-    game.shadowArmy =
-      10000;
-
-    game.title =
-      "Shadow Monarch";
-
+    game.secretQuestUnlocked = true;
+    game.secretQuestAccepted = true;
+    game.secretQuestCompleted = true;
 
     saveGame();
 
+    showSystemMessage(
+      "⚔️ SECRET QUEST COMPLETE!\n\n" +
+      "🔓 THREE-HEADED HOUND UNLOCKED!\n\n" +
+      "🐺 The hidden guardian awaits.",
+      false
+    );
+  }
 
-    document
-      .getElementById(
-        "bossScreen"
-      )
-      .classList.remove(
-        "active"
-      );
+  // Three-Headed Hound awakening.
+  if (currentBoss.xp === 3000) {
 
+    game.shadowArmy = 10000;
+    game.title = "Shadow Monarch";
 
-    currentBoss =
-      null;
+    saveGame();
 
+    document.getElementById("bossScreen")
+      .classList.remove("active");
+
+    currentBoss = null;
 
     updateUI();
 
-
     showSystemMessage(
-
       "👑 SHADOW MONARCH AWAKENED!\n\n" +
-
       "👥 10,000 SHADOW SOLDIERS UNLOCKED!\n\n" +
-
       "🌑 THE TRUE SYSTEM HAS BEGUN.\n\n" +
-
       "👥 Shadow Summoning is now available.",
-
       false
-
     );
 
     return;
-
   }
 
+  // Final boss.
+  if (currentBoss.finalBoss) {
 
-  /*
-    FINAL BOSS
-  */
-
-  if (
-    currentBoss.finalBoss
-  ) {
-
-    game.gameCompleted =
-      true;
-
+    game.gameCompleted = true;
     saveGame();
-
     showFinalScreen();
 
     return;
-
   }
 
-
-  /*
-    Boss XP reward.
-  */
-
-  if (
-    currentBoss.rewardXP > 0
-  ) {
-
-    game.xp +=
-      currentBoss.rewardXP;
-
+  // Give boss XP.
+  if (currentBoss.rewardXP > 0) {
+    game.xp += currentBoss.rewardXP;
   }
 
-
-  if (
-    game.xp > 70000
-  ) {
-
-    game.xp =
-      70000;
-
-  }
-
+  game.xp = Math.min(game.xp, 70000);
 
   saveGame();
 
   checkStrengthLootMilestones();
-
   checkSecretQuestCompletion();
 
+  document.getElementById("bossScreen")
+    .classList.remove("active");
 
-  document
-    .getElementById(
-      "bossScreen"
-    )
-    .classList.remove(
-      "active"
-    );
-
-
-  currentBoss =
-    null;
-
+  currentBoss = null;
 
   updateUI();
 
-
-  setTimeout(
-    () => {
-
-      checkBossGate();
-
-    },
-
-    500
-
-  );
+  setTimeout(() => {
+    checkBossGate();
+  }, 500);
 
 }
-
 
 /* =====================================================
    LEAVE BOSS
