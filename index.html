@@ -782,9 +782,7 @@ input {
   COMPLETE QUEST
 </button>
 
-  <button onclick="showScreen('mainMenu')">
-    BACK
-  </button>
+<button onclick="goHome()">BACK</button>
 
 </div>
 
@@ -1403,22 +1401,21 @@ function confirmName() {
 function openScreen(id) {
 
   document
-    .querySelectorAll(
-      ".screen"
-    )
+    .querySelectorAll(".screen")
     .forEach(screen => {
-
-      screen.classList.remove(
-        "active"
-      );
-
+      screen.classList.remove("active");
     });
 
-  document
-    .getElementById(id)
-    .classList.add(
-      "active"
-    );
+  const targetScreen = document.getElementById(id);
+
+  if (!targetScreen) return;
+
+  targetScreen.classList.add("active");
+
+  // SPECIAL QUEST SYSTEM
+  if (id === "specialQuestScreen") {
+    updateSpecialQuestUI();
+  }
 
 }
 
@@ -1677,6 +1674,7 @@ function updateUI() {
   updateStatsUI();
   updateInventoryUI();
   updateBossProgression();
+  updateSpecialQuestUI();
       }
 
 
