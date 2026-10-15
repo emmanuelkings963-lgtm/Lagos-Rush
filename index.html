@@ -846,7 +846,10 @@ lastLevelShown: 1,
   dailyCompleted: false,
 
   studyCompleted: false,
-
+specialQuestPushups: 0,
+specialQuestSitups: 0,
+specialQuestSquats: 0,
+specialQuestCompleted: false,
   lastDailyDate: "",
 
   strengthMilestones: [],
@@ -1924,7 +1927,115 @@ function updateStudyUI() {
       : "";
 
 }
+/* =====================================================
+   SPECIAL QUEST — ENDURANCE TRIAL
+===================================================== */
 
+function addSpecialPushup() {
+  if (game.specialQuestCompleted) return;
+
+  if (game.specialQuestPushups < 100) {
+    game.specialQuestPushups++;
+    saveGame();
+    updateSpecialQuestUI();
+  }
+}
+
+function addSpecialSitup() {
+  if (game.specialQuestCompleted) return;
+
+  if (game.specialQuestSitups < 100) {
+    game.specialQuestSitups++;
+    saveGame();
+    updateSpecialQuestUI();
+  }
+}
+
+function addSpecialSquat() {
+  if (game.specialQuestCompleted) return;
+
+  if (game.specialQuestSquats < 100) {
+    game.specialQuestSquats++;
+    saveGame();
+    updateSpecialQuestUI();
+  }
+}
+
+function updateSpecialQuestUI() {
+  const pushups = document.getElementById("pushupProgress");
+  const situps = document.getElementById("situpProgress");
+  const squats = document.getElementById("squatProgress");
+
+  if (!pushups || !situps || !squats) return;
+
+  pushups.innerText =
+    `${game.specialQuestPushups} / 100`;
+
+  situps.innerText =
+    `${game.specialQuestSitups} / 100`;
+
+  squats.innerText =
+    `${game.specialQuestSquats} / 100`;
+
+  const completeButton =
+    document.getElementById("specialQuestCompleteButton");
+
+  if (completeButton) {
+    completeButton.disabled =
+      game.specialQuestCompleted ||
+      game.specialQuestPushups < 100 ||
+      game.specialQuestSitups < 100 ||
+      game.specialQuestSquats < 100;
+
+    completeButton.innerText =
+      game.specialQuestCompleted
+        ? "✅ QUEST COMPLETED"
+        : "COMPLETE QUEST";
+  }
+}
+
+function completeSpecialQuest() {
+  if (game.specialQuestCompleted) {
+    showSystemMessage(
+      "⚠️ SPECIAL QUEST ALREADY COMPLETED.",
+      false
+    );
+    return;
+  }
+
+  if (
+    game.specialQuestPushups < 100 ||
+    game.specialQuestSitups < 100 ||
+    game.specialQuestSquats < 100
+  ) {
+    showSystemMessage(
+      "⚠️ Complete the required quest activities first.",
+      false
+    );
+    return;
+  }
+
+  game.specialQuestCompleted = true;
+
+  game.xp = Math.min(game.xp + 300, 70000);
+
+  saveGame();
+  updateUI();
+  updateSpecialQuestUI();
+  checkLevelUp();
+
+  showSystemMessage(
+    "⚔️ SPECIAL QUEST COMPLETE!\n\n" +
+    "🏆 ENDURANCE TRIAL CLEARED!\n\n" +
+    "⭐ +300 XP\n\n" +
+    "Your progress has been saved.",
+    false
+  );
+
+  setTimeout(() => {
+    checkBossGate();
+  }, 500);
+      }
 
 /* =====================================================
    INVENTORY
