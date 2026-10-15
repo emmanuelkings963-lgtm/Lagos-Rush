@@ -761,15 +761,26 @@ input {
 
   <p>Complete the following:</p>
 
-  <p>💪 Push-ups: <span id="pushupProgress">0 / 100</span></p>
-  <p>🔥 Sit-ups: <span id="situpProgress">0 / 100</span></p>
-  <p>🦵 Squats: <span id="squatProgress">0 / 100</span></p>
+  <p>💪 Push-ups</p>
+<button onclick="addSpecialPushup()">+1 PUSH-UP</button>
+<p id="pushupProgress">0 / 100</p>
+
+<p>🔥 Sit-ups</p>
+<button onclick="addSpecialSitup()">+1 SIT-UP</button>
+<p id="situpProgress">0 / 100</p>
+
+<p>🦵 Squats</p>
+<button onclick="addSpecialSquat()">+1 SQUAT</button>
+<p id="squatProgress">0 / 100</p>
 
   <h3>REWARD: +300 XP</h3>
 
-  <button onclick="completeSpecialQuest()">
-    COMPLETE QUEST
-  </button>
+<button
+  id="specialQuestCompleteButton"
+  onclick="completeSpecialQuest()"
+  disabled>
+  COMPLETE QUEST
+</button>
 
   <button onclick="showScreen('mainMenu')">
     BACK
