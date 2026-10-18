@@ -235,7 +235,203 @@ input {
   border-radius: 18px;
   box-shadow: 0 0 35px #0066ff;
 }
+/* =====================================
+   SILENT SYSTEM — GLOWING DUNGEON GATE
+===================================== */
 
+.gateScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 6000;
+  display: none;
+  overflow-y: auto;
+  padding: 30px 15px;
+  background: radial-gradient(
+    circle at center,
+    #251000 0%,
+    #09040b 45%,
+    #000 100%
+  );
+}
+
+.gateScreen.active {
+  display: block;
+}
+
+.gateTitle {
+  color: #ff9d32;
+  text-shadow: 0 0 15px #ff6500;
+}
+
+.gatePortal {
+  position: relative;
+  width: 190px;
+  height: 270px;
+  margin: 40px auto;
+  border: 4px solid #ff8c24;
+  border-radius: 50% 50% 45% 45%;
+  cursor: pointer;
+  background: radial-gradient(
+    ellipse at center,
+    #ffb347 0%,
+    #d85b00 20%,
+    #4b1700 55%,
+    #080008 75%
+  );
+  box-shadow:
+    0 0 10px #ff6500,
+    inset 0 0 15px #ff9d32;
+  animation: gateAwakening 5s ease-in-out forwards,
+             gatePulse 2s infinite alternate;
+  transition:
+    width 1s,
+    height 1s,
+    box-shadow 1s,
+    filter 1s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gatePortal::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 2px solid #ffb347;
+  border-radius: inherit;
+  box-shadow: inset 0 0 20px #ff6500;
+  animation: innerGate 2s infinite alternate;
+}
+
+.gatePortal::after {
+  content: "TAP TO ENTER";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -45px;
+  color: #ffb347;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px #ff6500;
+}
+
+.gatePortal.ready {
+  box-shadow:
+    0 0 20px #ff6500,
+    0 0 45px #ff8c24,
+    0 0 90px rgba(255, 100, 0, 0.7),
+    inset 0 0 35px #ffb347;
+}
+
+.gatePortal:active {
+  transform: scale(0.97);
+}
+
+@keyframes gateAwakening {
+  0% {
+    opacity: 0.15;
+    filter: brightness(0.3);
+  }
+
+  35% {
+    opacity: 0.55;
+    filter: brightness(0.7);
+  }
+
+  70% {
+    opacity: 0.85;
+    filter: brightness(1.2);
+  }
+
+  100% {
+    opacity: 1;
+    filter: brightness(1.7);
+  }
+}
+
+@keyframes gatePulse {
+  from {
+    box-shadow:
+      0 0 10px #ff6500,
+      inset 0 0 15px #ff9d32;
+  }
+
+  to {
+    box-shadow:
+      0 0 25px #ff6500,
+      0 0 45px rgba(255, 100, 0, 0.5),
+      inset 0 0 25px #ffb347;
+  }
+}
+
+@keyframes innerGate {
+  from {
+    opacity: 0.4;
+    transform: scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+.dungeonPanel {
+  max-width: 480px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 2px solid #ff8c24;
+  border-radius: 15px;
+  background: #100903;
+  box-shadow: 0 0 20px rgba(255, 100, 0, 0.25);
+}
+
+.dungeonBar {
+  width: 100%;
+  height: 18px;
+  margin: 10px auto;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #292020;
+}
+
+.dungeonBarFill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #ff4500,
+    #ffb347
+  );
+  transition: width 0.3s;
+}
+
+.manaFill {
+  background: linear-gradient(
+    90deg,
+    #0055ff,
+    #00eaff
+  );
+}
+
+.dungeonButton {
+  border-color: #ff8c24;
+  color: #ffb347;
+  box-shadow: 0 0 12px #773300;
+}
+
+.dungeonMessage {
+  min-height: 50px;
+  line-height: 1.6;
+  color: #ffcc99;
+  white-space: pre-line;
+}
+
+@media (max-width: 400px) {
+  .gatePortal {
+    width: 155px;
+    height: 225px;
+  }
+      }
 </style>
 
 </head>
