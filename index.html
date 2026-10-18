@@ -918,7 +918,133 @@ input {
   </div>
 
 </div>
+<!-- =========================================
+     DUNGEON GATE SCREEN
+========================================= -->
 
+<div id="gateScreen" class="gateScreen">
+
+  <h1 class="gateTitle">⚠️ UNKNOWN GATE DETECTED</h1>
+
+  <p id="gateRankText">GATE RANK: D</p>
+
+  <p id="gateStatusText">
+    An unidentified portal is awakening...
+  </p>
+
+  <div
+    id="gatePortal"
+    class="gatePortal"
+    onclick="enterDungeon()">
+  </div>
+
+  <p id="gateMissionText" class="dungeonMessage">
+    Awaiting gate activation...
+  </p>
+
+  <button
+    class="dungeonButton"
+    onclick="closeGateScreen()">
+    LEAVE GATE
+  </button>
+
+</div>
+
+
+<!-- =========================================
+     DUNGEON BATTLE SCREEN
+========================================= -->
+
+<div id="dungeonScreen" class="bossScreen">
+
+  <div class="bossBox">
+
+    <h1 style="color:#ff9d32">
+      🏰 DUNGEON BATTLE
+    </h1>
+
+    <h2 id="dungeonName">UNKNOWN DUNGEON</h2>
+
+    <p id="dungeonWaveText">WAVE 1</p>
+
+    <h3 id="dungeonEnemyName">Dungeon Monster</h3>
+
+    <p>
+      👹 Enemy HP:
+      <span id="dungeonEnemyHP">0</span>
+      /
+      <span id="dungeonEnemyMaxHP">0</span>
+    </p>
+
+    <div class="dungeonBar">
+      <div
+        id="dungeonEnemyHPFill"
+        class="dungeonBarFill">
+      </div>
+    </div>
+
+    <p>
+      👑 Your HP:
+      <span id="dungeonPlayerHP">0</span>
+      /
+      <span id="dungeonPlayerMaxHP">0</span>
+    </p>
+
+    <div class="dungeonBar">
+      <div
+        id="dungeonPlayerHPFill"
+        class="dungeonBarFill">
+      </div>
+    </div>
+
+    <h3>🔵 MANA</h3>
+
+    <p>
+      <span id="dungeonMana">100</span> / 100
+    </p>
+
+    <div class="dungeonBar">
+      <div
+        id="dungeonManaFill"
+        class="dungeonBarFill manaFill">
+      </div>
+    </div>
+
+    <p>
+      🌑 Available Shadows:
+      <span id="dungeonArmy">0</span>
+    </p>
+
+    <p>
+      👥 Deployed Shadows:
+      <span id="dungeonDeployed">0</span>
+    </p>
+
+    <button
+      class="dungeonButton"
+      id="dungeonAttackButton"
+      onclick="dungeonAttack()">
+      ⚔️ ATTACK
+    </button>
+
+    <button
+      class="dungeonButton"
+      id="dungeonSummonButton"
+      onclick="deployDungeonShadows()">
+      🌑 DEPLOY 100 SHADOWS
+    </button>
+
+    <p id="dungeonBattleMessage" class="dungeonMessage"></p>
+
+    <button
+      class="dungeonButton"
+      onclick="leaveDungeon()">
+      ↩️ EXIT DUNGEON
+    </button>
+
+  </div>
+
+</div>
 
 <!-- =====================================================
      SYSTEM POPUP
