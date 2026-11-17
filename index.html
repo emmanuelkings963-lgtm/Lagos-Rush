@@ -1983,11 +1983,14 @@ function confirmName() {
 /* =====================================================
    SCREEN
 ===================================================== */
-
 function openScreen(id) {
 
-  document
-    .querySelectorAll(".screen")
+  // Hide the main menu
+  document.getElementById("mainMenu")
+    .classList.add("hidden");
+
+  // Hide all other screens
+  document.querySelectorAll(".screen")
     .forEach(screen => {
       screen.classList.remove("active");
     });
@@ -1998,13 +2001,11 @@ function openScreen(id) {
 
   targetScreen.classList.add("active");
 
-  // SPECIAL QUEST SYSTEM
   if (id === "specialQuestScreen") {
     updateSpecialQuestUI();
   }
 
-}
-
+      }
 
 function goHome() {
 
