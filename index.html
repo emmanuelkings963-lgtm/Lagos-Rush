@@ -432,6 +432,215 @@ input {
     height: 225px;
   }
       }
+  /* =========================================
+   SILENT SYSTEM — AWAKENED INTERFACE
+========================================= */
+
+body {
+  background:
+    radial-gradient(ellipse at 50% 0%, #102b50 0%, transparent 45%),
+    linear-gradient(160deg, #020711, #050914 55%, #080316);
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+#mainMenu {
+  max-width: 600px;
+  margin: 15px auto;
+  padding: 22px 16px;
+  background: rgba(3, 9, 22, 0.94);
+  border: 1px solid #168dff;
+  border-radius: 8px;
+  box-shadow:
+    0 0 15px #0066ff,
+    inset 0 0 25px rgba(0, 100, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+#mainMenu::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    120deg,
+    transparent 35%,
+    rgba(0, 180, 255, 0.05),
+    transparent 65%
+  );
+}
+
+.systemHeader {
+  position: relative;
+  padding: 15px 5px 25px;
+  border-bottom: 1px solid #164b80;
+}
+
+.systemHeader h1 {
+  font-size: 30px;
+  letter-spacing: 4px;
+  color: #21dfff;
+  text-shadow: 0 0 15px #008cff;
+}
+
+.systemOnline {
+  color: #00ff9d;
+  font-size: 11px;
+  letter-spacing: 4px;
+  animation: onlinePulse 2s infinite;
+}
+
+@keyframes onlinePulse {
+  50% { opacity: 0.4; }
+}
+
+.playerIdentity {
+  margin: 25px 0;
+  padding: 20px;
+  background: linear-gradient(
+    120deg,
+    rgba(0, 100, 255, 0.16),
+    rgba(100, 0, 255, 0.08)
+  );
+  border: 1px solid #167dce;
+  text-align: left;
+}
+
+.playerLabel {
+  color: #61baff;
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+.playerIdentity h2 {
+  margin: 10px 0;
+  font-size: 25px;
+}
+
+.rankBadge {
+  display: inline-block;
+  padding: 7px 15px;
+  border: 1px solid #00d9ff;
+  color: #00eaff;
+  background: rgba(0, 150, 255, 0.12);
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+
+.statusPanel {
+  margin: 20px 0;
+  padding: 20px;
+  background: #080f20;
+  border: 1px solid #173c68;
+  text-align: left;
+}
+
+.statusTitle {
+  color: #4ebaff;
+  font-size: 12px;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+}
+
+.statusLine {
+  display: flex;
+  justify-content: space-between;
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+.statusLine span:first-child {
+  color: #8da9c9;
+}
+
+.statusLine strong {
+  color: #ffffff;
+}
+
+.awakenedXP {
+  color: #00eaff !important;
+}
+
+.xp-bar {
+  width: 100%;
+  height: 12px;
+  background: #101b2d;
+  border: 1px solid #174c7d;
+  border-radius: 2px;
+}
+
+.xp-fill {
+  background: linear-gradient(
+    90deg,
+    #006aff,
+    #00eaff
+  );
+  box-shadow: 0 0 12px #00aaff;
+}
+
+.commandTitle {
+  margin: 30px 0 15px;
+  color: #5abfff;
+  font-size: 12px;
+  letter-spacing: 4px;
+}
+
+.commandGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.commandButton {
+  min-height: 95px;
+  margin: 0;
+  padding: 15px 8px;
+  width: 100%;
+  border: 1px solid #1269a8;
+  border-radius: 4px;
+  background: linear-gradient(
+    145deg,
+    #0b1c35,
+    #050a17
+  );
+  color: #39dfff;
+  box-shadow: inset 0 0 12px rgba(0, 100, 255, 0.1);
+  transition: 0.25s;
+}
+
+.commandButton:active {
+  background: #102d50;
+  box-shadow: 0 0 20px #008cff;
+}
+
+.commandIcon {
+  display: block;
+  font-size: 27px;
+  margin-bottom: 9px;
+}
+
+.commandButton small {
+  display: block;
+  color: #7898ba;
+  font-size: 10px;
+  margin-top: 5px;
+}
+
+.systemFooter {
+  margin-top: 30px;
+  padding: 15px 5px 5px;
+  border-top: 1px solid #163654;
+  color: #547795;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+@media(max-width: 380px) {
+  .commandGrid {
+    grid-template-columns: 1fr;
+  }
+      }
 </style>
 
 </head>
@@ -471,44 +680,144 @@ input {
   </button>
 
 </div>
-
-
-<!-- =====================================================
-     MAIN MENU
-===================================================== -->
+<!-- =====================================
+     SILENT SYSTEM — HUNTER COMMAND CENTRE
+===================================== -->
 
 <div id="mainMenu" class="panel hidden">
 
-  <h1>⚔️ SILENT SYSTEM ⚔️</h1>
+  <div class="systemHeader">
 
-  <h2>
-    Welcome,
-    <span id="menuPlayerName"></span>
-  </h2>
+    <h1>⚔ SILENT SYSTEM</h1>
 
-  <p>
-    🏆 <span id="menuRank">E-Rank</span>
-  </p>
-
-  <p>
-    📈 Level
-    <span id="menuLevel">1</span> / 200
-  </p>
-
-  <p>
-    ⭐
-    <span id="menuXP">0</span>
-    / XP
-  </p>
-
-  <div class="xp-bar">
-
-    <div
-      id="mainXPFill"
-      class="xp-fill">
+    <div class="systemOnline">
+      ● SYSTEM ONLINE
     </div>
 
   </div>
+
+  <div class="playerIdentity">
+
+    <div class="playerLabel">
+      PLAYER IDENTIFICATION
+    </div>
+
+    <h2 id="menuPlayerName">Player</h2>
+
+    <span class="rankBadge" id="menuRank">
+      E-RANK
+    </span>
+
+  </div>
+
+  <div class="statusPanel">
+
+    <div class="statusTitle">
+      ◈ PLAYER STATUS
+    </div>
+
+    <div class="statusLine">
+      <span>PLAYER LEVEL</span>
+      <strong id="menuLevel">1</strong>
+    </div>
+
+    <div class="statusLine">
+      <span>EXPERIENCE</span>
+      <strong id="menuXP" class="awakenedXP">0</strong>
+    </div>
+
+    <div class="xp-bar">
+
+      <div
+        id="mainXPFill"
+        class="xp-fill">
+      </div>
+
+    </div>
+
+    <div class="statusLine">
+      <span>EVOLUTION REQUIREMENT</span>
+      <strong>6,000 XP</strong>
+    </div>
+
+  </div>
+
+  <div class="commandTitle">
+    ◈ SYSTEM COMMANDS
+  </div>
+
+  <div class="commandGrid">
+
+    <button
+      class="commandButton"
+      onclick="openScreen('trainingScreen')">
+
+      <span class="commandIcon">⚔️</span>
+      DAILY TRAINING
+      <small>Physical development</small>
+
+    </button>
+
+    <button
+      class="commandButton"
+      onclick="openScreen('studyScreen')">
+
+      <span class="commandIcon">📚</span>
+      STUDY QUEST
+      <small>Knowledge development</small>
+
+    </button>
+
+    <button
+      class="commandButton"
+      onclick="openInventory()">
+
+      <span class="commandIcon">🎒</span>
+      INVENTORY
+      <small>Collected items</small>
+
+    </button>
+
+    <button
+      class="commandButton"
+      onclick="openStats()">
+
+      <span class="commandIcon">📊</span>
+      ATTRIBUTES
+      <small>Player information</small>
+
+    </button>
+
+    <button
+      class="commandButton"
+      onclick="openBossProgression()">
+
+      <span class="commandIcon">🐉</span>
+      BOSS DATABASE
+      <small>Enemy records</small>
+
+    </button>
+
+    <button
+      class="commandButton"
+      onclick="openScreen('specialQuestScreen')">
+
+      <span class="commandIcon">🌑</span>
+      SPECIAL QUEST
+      <small>Hidden challenges</small>
+
+    </button>
+
+  </div>
+
+  <div class="systemFooter">
+    SILENT SYSTEM © PLAYER INTERFACE
+    <br><br>
+    YOUR JOURNEY HAS NOT ENDED.
+  </div>
+
+</div>
+
 
   <button
     class="menuButton"
