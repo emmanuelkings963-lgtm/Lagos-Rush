@@ -1366,7 +1366,48 @@ body {
 </div>
 
 <script>
+function playGlitchSound() {
+  const audioContext = new (
+    window.AudioContext || window.webkitAudioContext
+  )();
 
+  const duration = 1.2;
+
+  for (let i = 0; i < 9; i++) {
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    oscillator.type = i % 2 === 0 ? "sawtooth" : "square";
+
+    oscillator.frequency.setValueAtTime(
+      Math.random() * 1800 + 150,
+      audioContext.currentTime + i * 0.08
+    );
+
+    gain.gain.setValueAtTime(
+      0.0001,
+      audioContext.currentTime + i * 0.08
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.12,
+      audioContext.currentTime + i * 0.08 + 0.02
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.0001,
+      audioContext.currentTime + i * 0.08 + 0.13
+    );
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+
+    oscillator.start(audioContext.currentTime + i * 0.08);
+    oscillator.stop(audioContext.currentTime + i * 0.08 + 0.15);
+  }
+
+  setTimeout(() => audioContext.close(), duration * 1000);
+      }
 
 /* =====================================================
    PERMANENT SAVE SYSTEM
